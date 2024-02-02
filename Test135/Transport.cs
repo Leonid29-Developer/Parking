@@ -1,5 +1,7 @@
 ﻿using System.Drawing;
+using System.Reflection.Emit;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Test135
 {
@@ -11,7 +13,7 @@ namespace Test135
         /// <summary> Размеры окна отрисовки </summary>
         private Size _picture;
         /// <summary> Размер отрисовки</summary>
-        private Size _size = new Size(110, 70);
+        private Size _size;
 
         /// <summary> Максимальная скорость </summary>
         public int MaxSpeed { private set; get; }
@@ -31,6 +33,9 @@ namespace Test135
         /// <summary> Признаки наличия дополнительных элементов транспорта </summary> </summary>
         public AdditionalElements Elements { private set; get; }
 
+        /// <summary> Флаг управляемого объекта </summary>
+        public Bitmap Flag { private set; get; }
+
         /// <summary> Конструктор </summary>
         /// <param name="maxSpeed">Максимальная скорость</param>
         /// <param name="weight">Вес автомобиля</param>
@@ -39,12 +44,31 @@ namespace Test135
         /// <param name="frontSpoiler">Признак наличия переднего спойлера</param>
         /// <param name="sideSpoiler">Признак наличия боковых спойлеров</param>
         /// <param name="backSpoiler">Признак наличия заднего спойлера</param>
-        public Transport(Transports type, Directions direction, int maxSpeed, float weight, Color mainColor, Color dopColor, AdditionalElements Element)
+        public Transport(Transports type, int maxSpeed, float weight, Color mainColor, Color dopColor, AdditionalElements Element)
         {
-            Type = type; Direction = direction;
+            Type = type; Direction = Directions.Right;
             MaxSpeed = maxSpeed; Weight = weight;
             MainColor = mainColor; DopColor = dopColor;
             Elements = Element;
+
+            switch (type)
+            {
+                case Transports.SportCar: _size = new Size(110, 70); break;
+
+                case Transports.Cruiser:
+                    {
+                        // Размер отрисовки
+                        _size = new Size(200, 200);
+
+                        // Создание флага
+                        Bitmap BM_Flag = new Bitmap(15, 9); Graphics Grap_Flag = Graphics.FromImage(BM_Flag);
+                        Grap_Flag.FillRectangle(new SolidBrush(Color.White), 0, 0, 15, 3); Grap_Flag.FillRectangle(new SolidBrush(Color.Blue), 0, 3, 15, 3); 
+                        Grap_Flag.FillRectangle(new SolidBrush(Color.Red), 0, 6, 15, 3); Grap_Flag.FillRectangle(new SolidBrush(Color.Gold), 10, 3, 3, 3);
+                        Flag = BM_Flag;
+                    }
+                    break;
+
+            }
         }
 
         /// <summary> Установка позиции автомобиля </summary>
@@ -91,7 +115,7 @@ namespace Test135
         public void Draw(PictureBox PictureTransport)
         {
             Bitmap BiM = new Bitmap(PictureTransport.Width, PictureTransport.Height); Graphics GR = Graphics.FromImage(BiM);
-            Textures.Drawing(GR, Type, Direction, _startPos, _size, Elements, MainColor, DopColor); PictureTransport.Image = BiM;
+            Textures.Drawing(GR, Type, Direction, _startPos, _size, MainColor, DopColor, Elements, Flag); PictureTransport.Image = BiM;
         }
     }
 }

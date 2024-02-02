@@ -11,19 +11,22 @@ namespace Test135
 
         private Transport Selected_Transport;
 
-        //private void Interface_Load(object sender, EventArgs e)
-        //        {
-        //            Bitmap BiM = new Bitmap(PictureTransport.Width, PictureTransport.Height); PictureTransport.Image = BiM;
-        //        }
-
         /// <summary> Обработка нажатия кнопок управления </summary>
         private void Interface_KeyDown(object sender, KeyEventArgs e)
         {
-            // Обработка нажатия кнопки управления - Space
-            if (e.KeyCode == Keys.Space | e.KeyCode == Keys.Enter)
+            // Обработка нажатия кнопки управления - 1 - Создание SportCar
+            if (e.KeyCode == Keys.D1)
             {
                 Random Rand = new Random();
-                Selected_Transport = new Transport(Transports.SportCar, Directions.Right, Rand.Next(100, 300), Rand.Next(1000, 2000), Color.Blue, Color.Yellow, new AdditionalElements(true, true, true, false));
+                Selected_Transport = new Transport(Transports.SportCar, Rand.Next(100, 300), Rand.Next(1000, 2000), Color.Blue, Color.Yellow, new AdditionalElements(true, true, true, false));
+                Selected_Transport.SetPosition(new Point(Rand.Next(10, 100), Rand.Next(10, 100)), new Size(PictureTransport.Width, PictureTransport.Height));
+            }
+
+            // Обработка нажатия кнопки управления - 2 - Создание Cruiser
+            if (e.KeyCode == Keys.D2)
+            {
+                Random Rand = new Random();
+                Selected_Transport = new Transport(Transports.Cruiser, Rand.Next(100, 300), Rand.Next(1000, 2000), Color.Red, Color.Green, new AdditionalElements(false, false, false, false));
                 Selected_Transport.SetPosition(new Point(Rand.Next(10, 100), Rand.Next(10, 100)), new Size(PictureTransport.Width, PictureTransport.Height));
             }
 

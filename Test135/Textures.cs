@@ -14,7 +14,7 @@ namespace Test135
         /// <param name="DopColor"> Дополнительный цвет </param>
         /// <param name="Elements"> Признаки наличия дополнительных элементов транспорта </param>
         public static void Drawing
-            (Graphics Grap, Transports Type, Directions Direction, Point _startPos, Size _size, Color MainColor, Color DopColor, AdditionalElements Elements)
+            (Graphics Grap, Transports Type, Directions Direction, Point _startPos, Size _size, Color MainColor, Color DopColor, AdditionalElements Elements, Bitmap Flag)
         {
             Bitmap BiM = new Bitmap(_size.Width, _size.Height); Graphics Grap_Transport = Graphics.FromImage(BiM);
 
@@ -133,6 +133,61 @@ namespace Test135
                             case Directions.Left: RF_BM(Grap, BiM, ModeFlip.FlipX, _startPos); break;
 
                             case Directions.Right: RF_BM(Grap, BiM, ModeFlip.None, _startPos); break;
+                        }
+                    }
+                    break;
+
+                case Transports.Cruiser:
+                    {
+                        // Текстура
+                        {
+                            //Трубы
+                            for (int I1 = 0; I1 < 3; I1++) { Grap_Transport.FillRectangle(new SolidBrush(SystemColors.ControlDarkDark), 105 + 18 * I1, 72, 10, 50); Grap_Transport.DrawRectangle(new Pen(Color.Black), 105 + 18 * I1, +72, 10, 50); }
+
+                            //Флаштог + Провода
+                            Bitmap H = Flag; RF_BM(Grap_Transport, H, ModeFlip.None, new Point(97, 45)); Grap_Transport.DrawRectangle(new Pen(Color.Black), 97, 45, 15, 9);
+
+                            Grap_Transport.DrawRectangle(new Pen(Color.DarkGray), 97, 60, 15, 1); Grap_Transport.DrawRectangle(new Pen(Color.DarkGray), 112, 61, 12, 1);
+                            Grap_Transport.DrawRectangle(new Pen(Color.DarkGray), 124, 62, 10, 1); Grap_Transport.DrawRectangle(new Pen(Color.DarkGray), 134, 61, 12, 1);
+                            Grap_Transport.DrawRectangle(new Pen(Color.DarkGray), 146, 60, 15, 1);
+
+                            Grap_Transport.DrawRectangle(new Pen(Color.Black), 96, 44, 1, 78); Grap_Transport.DrawRectangle(new Pen(Color.Black), 160, 58, 1, 64);
+
+                            //Башня 1 
+                            Grap_Transport.FillRectangle(new SolidBrush(SystemColors.ControlDarkDark), +2, 110, 22, 5); Grap_Transport.DrawRectangle(new Pen(Color.Black), 2, 110, 22, 5);
+                            Grap_Transport.FillEllipse(new SolidBrush(Color.DarkGray), 12, 108, 26, 26); Grap_Transport.DrawEllipse(new Pen(Color.Black), 12, 108, 26, 26);
+
+                            //Башня 2
+                            Grap_Transport.FillRectangle(new SolidBrush(SystemColors.ControlDarkDark), 178, 110, 22, 5); Grap_Transport.DrawRectangle(new Pen(Color.Black), 178, 110, 22, 5);
+                            Grap_Transport.FillEllipse(new SolidBrush(Color.DarkGray), 164, 108, 26, 26); Grap_Transport.DrawEllipse(new Pen(Color.Black), 164, 108, 26, 26);
+
+                            //ПВО
+                            Grap_Transport.FillEllipse(new SolidBrush(Color.DarkGray), 44, 109, 25, 25); Grap_Transport.DrawEllipse(new Pen(Color.Black), 44, 109, 25, 25);
+
+                            for (int I1 = 0; I1 < 9; I1++) Grap_Transport.DrawRectangle(new Pen(Color.Black), 54 - I1, 108 - I1, 1, 1);
+                            for (int I1 = 0; I1 < 8; I1++) Grap_Transport.DrawRectangle(new Pen(Color.Black), 53 - I1, 108 - I1, 1, 1);
+
+                            for (int I1 = 0; I1 < 8; I1++) Grap_Transport.DrawRectangle(new Pen(Color.Black), 50 - I1, 109 - I1, 1, 1);
+                            for (int I1 = 0; I1 < 8; I1++) Grap_Transport.DrawRectangle(new Pen(Color.Black), 50 - I1, 110 - I1, 1, 1);
+
+                            //Командный пункт
+                            Grap_Transport.FillRectangle(new SolidBrush(Color.DarkGray), 75, 102, 18, 20); Grap_Transport.DrawRectangle(new Pen(Color.Black), 75, 102, 18, 20);
+                            Grap_Transport.FillRectangle(new SolidBrush(Color.DarkGray), 72, 90, 21, 12); Grap_Transport.DrawRectangle(new Pen(Color.Black), 72, 90, 21, 12);
+                            Grap_Transport.FillRectangle(new SolidBrush(Color.LightBlue), 72, 92, 8, 7); Grap_Transport.DrawRectangle(new Pen(Color.Black), 72, 92, 8, 7);
+
+                            //Палуба
+                            Grap_Transport.FillRectangle(new SolidBrush(MainColor), 10, 136, 182, 4); Grap_Transport.DrawRectangle(new Pen(Color.Black), 10, 136, 182, 4);
+                            Grap_Transport.FillRectangle(new SolidBrush(MainColor), 5, 132, 192, 4); Grap_Transport.DrawRectangle(new Pen(Color.Black), 5, 132, 192, 4);
+                            Grap_Transport.FillRectangle(new SolidBrush(Color.Gray), 0, 124, 200, 8); Grap_Transport.DrawRectangle(new Pen(Color.Black), 0, 124, 200, 8);
+                            Grap_Transport.FillRectangle(new SolidBrush(Color.Black), 0, 122, 200, 2); Grap_Transport.DrawRectangle(new Pen(Color.Black), 0, 122, 200, 2);
+                        }
+
+                        // Вывод на экран
+                        switch (Direction)
+                        {
+                            case Directions.Left: RF_BM(Grap, BiM, ModeFlip.None, _startPos); break;
+
+                            case Directions.Right: RF_BM(Grap, BiM, ModeFlip.FlipX, _startPos); break;
                         }
                     }
                     break;
