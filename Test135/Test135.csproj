@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdditionalElements.cs" />
     <Compile Include="Interface.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -57,6 +58,7 @@
     <Compile Include="Transport.cs" />
     <Compile Include="Textures.cs" />
     <Compile Include="Директории\Directions.cs" />
+    <Compile Include="Директории\ModeFlip.cs" />
     <Compile Include="Директории\Transports.cs" />
     <EmbeddedResource Include="Interface.resx">
       <DependentUpon>Interface.cs</DependentUpon>

@@ -1,43 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
+using System.Windows.Forms;
 
 namespace Test135
 {
-    /// <summary> Класс отрисовки автомобиля </summary>
+    /// <summary> Класс отрисовки транспорт </summary>
     public class Transport
     {
-        /// <summary> Координаты отрисовки автомобиля </summary>
-        public Point _startPos;
+        /// <summary> Координаты отрисовки </summary>
+        private Point _startPos;
         /// <summary> Размеры окна отрисовки </summary>
         private Size _picture;
-        /// <summary> Размер отрисовки автомобиля </summary>
-        private Size CarSize = new Size(100,60);
+        /// <summary> Размер отрисовки</summary>
+        private Size _size = new Size(110, 70);
 
         /// <summary> Максимальная скорость </summary>
         public int MaxSpeed { private set; get; }
-        /// <summary> Вес автомобиля </summary>
+        /// <summary> Вес </summary>
         public float Weight { private set; get; }
 
-        /// <summary> Тип транспорта  </summary>
+        /// <summary> Тип транспорта </summary>
         public Transports Type { private set; get; }
-        /// <summary> Направление транспорта  </summary>
+        /// <summary> Направление транспорта </summary>
         public Directions Direction { private set; get; }
 
-        /// <summary> Основной цвет кузова  </summary>
+        /// <summary> Основной цвет </summary>
         public Color MainColor { private set; get; }
         /// <summary> Дополнительный цвет </summary>
         public Color DopColor { private set; get; }
 
-        /// <summary> Признак наличия переднего спойлера </summary>
-        public bool FrontSpoiler { private set; get; }
-        /// <summary> Признак наличия боковых спойлеров </summary>
-        public bool SideSpoiler { private set; get; }
-        /// <summary> Признак наличия заднего спойлера </summary>
-        public bool BackSpoiler { private set; get; }
+        /// <summary> Признаки наличия дополнительных элементов транспорта </summary> </summary>
+        public AdditionalElements Elements { private set; get; }
 
         /// <summary> Конструктор </summary>
         /// <param name="maxSpeed">Максимальная скорость</param>
@@ -47,12 +39,12 @@ namespace Test135
         /// <param name="frontSpoiler">Признак наличия переднего спойлера</param>
         /// <param name="sideSpoiler">Признак наличия боковых спойлеров</param>
         /// <param name="backSpoiler">Признак наличия заднего спойлера</param>
-        public Transport(Transports type, Directions direction,int maxSpeed, float weight, Color mainColor, Color dopColor, bool frontSpoiler, bool sideSpoiler, bool backSpoiler)
+        public Transport(Transports type, Directions direction, int maxSpeed, float weight, Color mainColor, Color dopColor, AdditionalElements Element)
         {
-            Type = type;Direction = direction;
+            Type = type; Direction = direction;
             MaxSpeed = maxSpeed; Weight = weight;
             MainColor = mainColor; DopColor = dopColor;
-            FrontSpoiler = frontSpoiler; SideSpoiler = sideSpoiler; BackSpoiler = backSpoiler;
+            Elements = Element;
         }
 
         /// <summary> Установка позиции автомобиля </summary>
@@ -63,23 +55,43 @@ namespace Test135
 
         /// <summary> Изменение направления пермещения </summary>
         /// <param name="Direction">Направление</param>
-        public void MoveTransport(Directions Direction)
+        public void MoveTransport(Directions NewDirection)
         {
             float step = MaxSpeed * 100 / Weight;
-            switch (Direction)
+            switch (NewDirection)
             {
                 // Вправо
-                case Directions.Right: if (_startPos.X + step < _picture.Width - CarSize.Width) _startPos = new Point((int)(_startPos.X+step),_startPos.Y); break;
+                case Directions.Right:
+                    {
+                        if (_startPos.X + step < _picture.Width - _size.Width) _startPos = new Point((int)(_startPos.X + step), _startPos.Y);
+                        Direction = Directions.Right;
+                    }
+                    break;
 
                 // Влево
-                case Directions.Left: if (_startPos.X - step > 0) _startPos = new Point((int)(_startPos.X - step), _startPos.Y); break;
+                case Directions.Left:
+                    {
+                        if (_startPos.X - step > 0) _startPos = new Point((int)(_startPos.X - step), _startPos.Y);
+                        Direction = Directions.Left;
+                    }
+                    break;
 
                 // Вверх
-                case Directions.Up: if (_startPos.Y - step > 0) _startPos = new Point(_startPos.X, (int)(_startPos.Y - step)); break;
+                case Directions.Up:
+                    if (_startPos.Y - step > 0) _startPos = new Point(_startPos.X, (int)(_startPos.Y - step)); break;
 
                 // Вниз
-                case Directions.Down: if (_startPos.Y + step < _picture.Height - CarSize.Height) _startPos = new Point(_startPos.X, (int)(_startPos.Y + step)); break;
+                case Directions.Down:
+                    if (_startPos.Y + step < _picture.Height - _size.Height) _startPos = new Point(_startPos.X, (int)(_startPos.Y + step)); break;
             }
+        }
+
+        /// <summary> Метод отрисовки машины </summary>
+        /// <param name="PictureTransport">Элемент управления - Интерфейс</param>
+        public void Draw(PictureBox PictureTransport)
+        {
+            Bitmap BiM = new Bitmap(PictureTransport.Width, PictureTransport.Height); Graphics GR = Graphics.FromImage(BiM);
+            Textures.Drawing(GR, Type, Direction, _startPos, _size, Elements, MainColor, DopColor); PictureTransport.Image = BiM;
         }
     }
 }
