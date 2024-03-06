@@ -48,7 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdditionalElements.cs" />
-    <Compile Include="Cruiser.cs" />
+    <Compile Include="Transport Classes\Cruiser.cs" />
     <Compile Include="Transport Classes\Car.cs" />
     <Compile Include="Form_Interface.cs">
       <SubType>Form</SubType>
