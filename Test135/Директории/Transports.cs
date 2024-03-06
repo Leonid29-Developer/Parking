@@ -2,6 +2,7 @@
 {
     public enum Transports
     {
+        Car,
         SportCar,
         Cruiser
     }

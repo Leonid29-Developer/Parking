@@ -1,6 +1,6 @@
 ﻿namespace Test135
 {
-    partial class Interface
+    partial class Form_Interface
     {
         /// <summary>
         /// Обязательная переменная конструктора.
@@ -34,6 +34,7 @@
             // 
             // PictureTransport
             // 
+            this.PictureTransport.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.PictureTransport.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PictureTransport.Location = new System.Drawing.Point(0, 0);
             this.PictureTransport.Name = "PictureTransport";
@@ -41,16 +42,16 @@
             this.PictureTransport.TabIndex = 0;
             this.PictureTransport.TabStop = false;
             // 
-            // Interface
+            // Form_Interface
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(900, 500);
             this.Controls.Add(this.PictureTransport);
-            this.Name = "Interface";
+            this.Name = "Form_Interface";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Интерфейс";
-            //this.Load += new System.EventHandler(this.Interface_Load);
+            this.Load += new System.EventHandler(this.Form_Interface_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Interface_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.PictureTransport)).EndInit();
             this.ResumeLayout(false);

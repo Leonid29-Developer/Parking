@@ -13,7 +13,7 @@ namespace Test135
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Interface());
+            Application.Run(new Form_Interface());
         }
     }
 }
