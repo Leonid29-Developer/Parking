@@ -24,6 +24,9 @@ namespace Test135
         /// <summary> Основной цвет транспорта </summary>
         public Color MainColor { protected set; get; }
 
+        /// <summary> Получение типа транспорта </summary>
+        public Transports GetTypeTransport() => Type;
+
         /// <summary> Получение направления транспорта </summary>
         public Directions GetDirection() => Direction;
 
@@ -43,32 +46,22 @@ namespace Test135
         /// <param name="Direction">Направление</param>
         public void MoveTransport(Directions NewDirection)
         {
-            float step = MaxSpeed * 100 / Weight;
+            //float step = MaxSpeed * 100 / Weight;
             switch (NewDirection)
             {
                 // Вправо
-                case Directions.Right:
-                    {
-                        if (_startPos.X + step < _picture.Width - _size.Width) _startPos = new Point((int)(_startPos.X + step), _startPos.Y);
-                        Direction = Directions.Right;
-                    }
-                    break;
+                case Directions.Right: Direction = Directions.Right; break;
 
                 // Влево
-                case Directions.Left:
-                    {
-                        if (_startPos.X - step > 0) _startPos = new Point((int)(_startPos.X - step), _startPos.Y);
-                        Direction = Directions.Left;
-                    }
-                    break;
+                case Directions.Left: Direction = Directions.Left; break;
 
-                // Вверх
-                case Directions.Up:
-                    if (_startPos.Y - step > 0) _startPos = new Point(_startPos.X, (int)(_startPos.Y - step)); break;
+                //// Вверх
+                //case Directions.Up:
+                //    if (_startPos.Y - step > 0) _startPos = new Point(_startPos.X, (int)(_startPos.Y - step)); break;
 
-                // Вниз
-                case Directions.Down:
-                    if (_startPos.Y + step < _picture.Height - _size.Height) _startPos = new Point(_startPos.X, (int)(_startPos.Y + step)); break;
+                //// Вниз
+                //case Directions.Down:
+                //    if (_startPos.Y + step < _picture.Height - _size.Height) _startPos = new Point(_startPos.X, (int)(_startPos.Y + step)); break;
             }
         }
 

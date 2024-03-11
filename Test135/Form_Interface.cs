@@ -54,7 +54,7 @@ namespace Test135
 
                 Random Rand = new Random(); T = true;
                 Selected_Transport = new Cruiser
-                    (Transports.Cruiser, Rand.Next(300, 600), Rand.Next(1000, 2000), Color.Red, Color.Black, BM_Flag);
+                    (Transports.Cruiser, Rand.Next(300, 600), Rand.Next(1000, 2000), Color.Red, BM_Flag);
                 Selected_Transport.SetPosition
                     (new Point(Rand.Next(10, 100), Rand.Next(10, 100)), new Size(PictureTransport.Width, PictureTransport.Height));
             }
@@ -93,7 +93,7 @@ namespace Test135
             if (T)
             {
                 Bitmap BiM = new Bitmap(PictureTransport.Width, PictureTransport.Height); PictureTransport.Image = BiM;
-                Textures.Drawing(PictureTransport, Selected_Transport);
+               // Textures.Drawing(PictureTransport, Selected_Transport);
             }
         }
     }

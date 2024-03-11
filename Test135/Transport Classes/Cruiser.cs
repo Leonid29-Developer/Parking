@@ -5,9 +5,6 @@ namespace Test135
     /// <summary> Класс отрисовки транспорта - Cruiser </summary>
     public class Cruiser : Vehicle
     {
-        /// <summary> Дополнительный цвет траспорта </summary>
-        public Color DopColor { private set; get; }
-
         /// <summary> Флаг траспорта </summary>
         public Bitmap Flag { private set; get; }
 
@@ -18,10 +15,10 @@ namespace Test135
         /// <param name="NewMainColor">Основной цвет траспорта</param>
         /// <param name="NewDopColor">Дополнительный цвет</param>
         /// <param name="NewFlag"> Флаг траспорта</param>
-        public Cruiser(Transports type, int maxSpeed, float weight, Color NewMainColor, Color NewDopColor, Bitmap NewFlag)
+        public Cruiser(Transports type, int maxSpeed, float weight, Color NewMainColor, Bitmap NewFlag)
         {
             Type = type; Direction = Directions.Right;
-            MainColor = NewMainColor; DopColor = NewDopColor; Flag = NewFlag;
+            MainColor = NewMainColor; Flag = NewFlag;
             MaxSpeed = maxSpeed; Weight = weight; _size = new Size(212, 118);
         }
 

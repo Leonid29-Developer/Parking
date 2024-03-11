@@ -8,17 +8,16 @@ namespace Test135
         /// <summary> Метод. Отрисовка транспорта </summary>
         /// <param name="PictureBackground"> Изображение для отрисовки </param>
         /// <param name="Selected_Transport"> Интерфейс транспорта </param>
-        public static void Drawing(PictureBox PictureBackground, ITransport Selected_Transport)
+        public static void Drawing(Graphics Grap, ITransport Selected_Transport)
         {
-            Graphics Grap = Graphics.FromImage(PictureBackground.Image);
-
             Size Temp_Size = Selected_Transport.GetSize();
-            Temp_Size = new Size(Temp_Size.Width, Temp_Size.Height);
 
             Bitmap BiM = new Bitmap(Temp_Size.Width, Temp_Size.Height);
             Graphics Grap_T = Graphics.FromImage(BiM);
 
             Selected_Transport.Draw(Grap_T);
+
+            //Grap_T.DrawRectangle(new Pen(Color.Black), 0, 0, Temp_Size.Width, Temp_Size.Height);
 
             switch (Selected_Transport.GetDirection())
             {
@@ -31,7 +30,7 @@ namespace Test135
                     break;
             }
 
-            PictureBackground.Refresh();
+            //PictureBackground.Refresh();
         }
 
         /// <summary> Метод. Отзеркаливание или переворот изображения и наложение его на интерфейс </summary>

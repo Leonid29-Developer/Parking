@@ -4,6 +4,9 @@ namespace Test135
 {
     public interface ITransport
     {
+        /// <summary> Получение типа транспорта </summary>
+        Transports GetTypeTransport();
+
         /// <summary> Получение направления транспорта </summary>
         Directions GetDirection();
 
