@@ -1,20 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 
 namespace Test135
 {
     public partial class FormParking : Form
     {
-        /// <summary> Объект от класса-парковки </summary>
-        Parking<ITransport> parking;
+        /// <summary> Объект от класса многоуровневой парковки </summary>
+        MultiLevelParking parking;
+
+        /// <summary> Количество уровней-парковок </summary>
+        private const int countLevel = 6;
 
         public FormParking()
         { InitializeComponent(); NewDraw(); }
@@ -24,24 +20,37 @@ namespace Test135
         {
             if (Width > 160 & Height > 30)
             {
-                parking.Resize(new Size(pictureBoxParking.Width, pictureBoxParking.Height));
-                _ = parking ^ 1; Draw();
+                for (int i = 0; i < countLevel; i++)
+                {
+                    parking[i].Resize(new Size(pictureBoxParking.Width, pictureBoxParking.Height));
+                    _ = parking[i] ^ 1;
+                }
+                Draw();
             }
         }
 
         /// <summary> Метод. Отрисовка парковки </summary>
         private void NewDraw()
         {
-            parking = new Parking<ITransport>(new Size(pictureBoxParking.Width, pictureBoxParking.Height));
-                Draw();
+            parking = new MultiLevelParking(countLevel, new Size(pictureBoxParking.Width, pictureBoxParking.Height));
+
+            // Заполнение listBox
+            for (int i = 0; i < countLevel; i++)
+                ListLevels.Items.Add("Уровень " + (i + 1));
+            ListLevels.SelectedIndex = 0;
+
+            Draw();
         }
 
         /// <summary> Метод. отрисовка парковки </summary>
         private void Draw()
         {
-            Bitmap bmp = new Bitmap(pictureBoxParking.Width, pictureBoxParking.Height);
+            if (ListLevels.SelectedIndex > -1)
+            {
+                Bitmap bmp = new Bitmap(pictureBoxParking.Width, pictureBoxParking.Height);
                 Graphics gr = Graphics.FromImage(bmp);
-                parking.Draw(gr); pictureBoxParking.Image = bmp;
+                parking[ListLevels.SelectedIndex].Draw(gr); pictureBoxParking.Image = bmp;
+            }
         }
 
         /// <summary> Обработка нажатия кнопки "Припарковать автомобиль" </summary>
@@ -51,7 +60,7 @@ namespace Test135
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 var car = new Car(Transports.Car, 100, 1000, dialog.Color);
-                _ = parking + car; Draw();
+                _ = parking[ListLevels.SelectedIndex] + car; Draw();
             }
         }
 
@@ -66,7 +75,7 @@ namespace Test135
                 {
                     Random Rand = new Random();
                     var car = new SportCar(Transports.SportCar, 100, 1000, dialog.Color, dialogDop.Color, Rand.Next(1, 4), Color.White);
-                    _ = parking + car; Draw();
+                    _ = parking[ListLevels.SelectedIndex] + car; Draw();
                 }
             }
         }
@@ -85,7 +94,7 @@ namespace Test135
                 Grap_Flag.FillRectangle(new SolidBrush(Color.Gold), 10, 3, 3, 3);
 
                 var car = new Cruiser(Transports.Cruiser, 100, 1000, dialog.Color, BM_Flag);
-                _ = parking + car; Draw();
+                _ = parking[ListLevels.SelectedIndex] + car; Draw();
             }
         }
 
@@ -94,7 +103,7 @@ namespace Test135
         {
             if (textBox1.Text != "")
             {
-                var car = parking - Convert.ToInt32(textBox1.Text);
+                var car = parking[ListLevels.SelectedIndex] - Convert.ToInt32(textBox1.Text);
                 if (car != null)
                 {
                     Bitmap bmp = new Bitmap(pictureBoxTakeCar.Width, pictureBoxTakeCar.Height);
@@ -110,5 +119,7 @@ namespace Test135
                 Draw();
             }
         }
+
+        private void ListLevels_SelectedIndexChanged(object sender, EventArgs e) => Draw();
     }
 }

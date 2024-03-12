@@ -2,18 +2,15 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Test135;
 
 namespace Test135
 {
     /// <summary> Параметризованны класс для хранения набора объектов от интерфейса ITransport </summary>
     public class Parking<T> where T : class, ITransport
     {
-        /// <summary> Массив объектов, которые храним </summary>
-        private T[] _places;
+        /// <summary> Массив объектов </summary>
+        private Dictionary<int, T> _places = new Dictionary<int, T>();
 
         /// <summary> Размер окна отрисовки </summary>
         private Size PictureSize { get; set; }
@@ -38,10 +35,7 @@ namespace Test135
             int CountX = NewPictureSize.Width / (_placeSizeWidth + Distance);
             int CountY = NewPictureSize.Height / _placeSizeHeight;
 
-PictureSize = NewPictureSize; PlaceCount = new Point(CountX, CountY);
-
-            _places = new T[PlaceCount.X * PlaceCount.Y];
-                for (int i = 0; i < _places.Length; i++) _places[i] = null;
+            PictureSize = NewPictureSize; PlaceCount = new Point(CountX, CountY);
         }
 
         public void Resize(Size NewPictureSize)
@@ -50,11 +44,6 @@ PictureSize = NewPictureSize; PlaceCount = new Point(CountX, CountY);
             int CountY = NewPictureSize.Height / _placeSizeHeight;
 
             PictureSize = NewPictureSize; PlaceCount = new Point(CountX, CountY);
-
-            T[] Temp = new T[PlaceCount.X * PlaceCount.Y];
-            for (int i = 0; i < Temp.Length; i++) Temp[i] = null;
-            for (int i = 0; i < _places.Length & i < Temp.Length; i++)Temp[i] = _places[i];
-                _places = Temp;
         }
 
         /// <summary> Перегрузка оператора степени <br/> 
@@ -63,14 +52,14 @@ PictureSize = NewPictureSize; PlaceCount = new Point(CountX, CountY);
         public static int operator ^(Parking<T> p, int QR)
         {
             Point Offset = new Point(0, 0);
-            for (int i = 0; i < p._places.Length; i++)
+            for (int i = 0; i < p._places.Count; i++)
                 if (!p.CheckFreePlace(i))
                 {
                     switch (p._places[i].GetTypeTransport())
                     {
                         case Transports.Car: Offset = new Point(60, 30); break;
                         case Transports.SportCar: Offset = new Point(55, 25); break;
-                        default: Offset = new Point(0,0); break;
+                        default: Offset = new Point(0, 0); break;
                     }
 
                     p._places[i].SetPosition
@@ -86,15 +75,19 @@ PictureSize = NewPictureSize; PlaceCount = new Point(CountX, CountY);
         /// <param name="car">Добавляемый автомобиль</param>
         public static int operator +(Parking<T> p, T Transport)
         {
-            for (int i = 0; i < p._places.Length; i++)
+            if (p._places.Count == p.PlaceCount.X * p.PlaceCount.Y) return 0;
+            Point Offset = new Point(0, 0);
+
+            for (int i = 0; i < p.PlaceCount.X * p.PlaceCount.Y; i++)
                 if (p.CheckFreePlace(i))
                 {
-                    p._places[i] = Transport; Point Offset = new Point(0, 0);
+                    p._places.Add(i, Transport);
 
                     switch (p._places[i].GetTypeTransport())
                     {
                         case Transports.Car: Offset = new Point(60, 30); break;
                         case Transports.SportCar: Offset = new Point(55, 25); break;
+                        default: Offset = new Point(0, 0); break;
                     }
 
                     Random Rand = new Random();
@@ -109,6 +102,8 @@ PictureSize = NewPictureSize; PlaceCount = new Point(CountX, CountY);
                         new Size(p.PictureSize.Width, p.PictureSize.Height));
                     return i;
                 }
+
+            MessageBox.Show("Нет свободных мест", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return -1;
         }
 
@@ -118,12 +113,12 @@ PictureSize = NewPictureSize; PlaceCount = new Point(CountX, CountY);
         /// <param name="index">Индекс места, с которого пытаемся извлечь объект</ param>
         public static T operator -(Parking<T> p, int index)
         {
-            if (index < 0 || index > p._places.Length) return null;
+            if (index < 0 | index > p._places.Count) return null;
             if (!p.CheckFreePlace(index))
             {
-                T car = p._places[index];
-                p._places[index] = null;
-                return car;
+                T Transport = p._places[index];
+                p._places.Remove(index);
+                return Transport;
             }
             return null;
         }
@@ -131,15 +126,18 @@ PictureSize = NewPictureSize; PlaceCount = new Point(CountX, CountY);
         /// <summary> Метод проверки заполнености парковочного места (ячейки массива) </summary>
         /// <param name="index">Номер парковочного места (порядковый номер в массиве)</param>
         private bool CheckFreePlace(int index)
-        { return _places[index] == null; }
+        { return !_places.ContainsKey(index); }
 
         /// <summary> Метод отрисовки парковки </summary>
         public void Draw(Graphics g)
         {
             DrawMarking(g);
-            for (int i = 0; i < _places.Length; i++)
-                if (!CheckFreePlace(i))
-               Textures.Drawing(g, _places[i]);
+            if (_places != null)
+            {
+                List<int> keys = _places.Keys.ToList();
+                for (int i = 0; i < keys.Count; i++)
+                    Textures.Drawing(g, _places[keys[i]]);
+            }
         }
 
         /// <summary> Метод отрисовки разметки парковочных мест  </summary>

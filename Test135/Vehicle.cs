@@ -55,13 +55,13 @@ namespace Test135
                 // Влево
                 case Directions.Left: Direction = Directions.Left; break;
 
-                //// Вверх
-                //case Directions.Up:
-                //    if (_startPos.Y - step > 0) _startPos = new Point(_startPos.X, (int)(_startPos.Y - step)); break;
+                    //// Вверх
+                    //case Directions.Up:
+                    //    if (_startPos.Y - step > 0) _startPos = new Point(_startPos.X, (int)(_startPos.Y - step)); break;
 
-                //// Вниз
-                //case Directions.Down:
-                //    if (_startPos.Y + step < _picture.Height - _size.Height) _startPos = new Point(_startPos.X, (int)(_startPos.Y + step)); break;
+                    //// Вниз
+                    //case Directions.Down:
+                    //    if (_startPos.Y + step < _picture.Height - _size.Height) _startPos = new Point(_startPos.X, (int)(_startPos.Y + step)); break;
             }
         }
 
