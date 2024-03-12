@@ -53,6 +53,12 @@
     <Compile Include="FormParking.Designer.cs">
       <DependentUpon>FormParking.cs</DependentUpon>
     </Compile>
+    <Compile Include="Form_TransportConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_TransportConfig.Designer.cs">
+      <DependentUpon>Form_TransportConfig.cs</DependentUpon>
+    </Compile>
     <Compile Include="MultiLevelParking.cs" />
     <Compile Include="Parking.cs" />
     <Compile Include="Transport Classes\Cruiser.cs" />
@@ -63,11 +69,15 @@
     <Compile Include="Transport Classes\SportCar.cs" />
     <Compile Include="Textures.cs" />
     <Compile Include="Vehicle.cs" />
+    <Compile Include="Директории\TypesСolors.cs" />
     <Compile Include="Директории\Directions.cs" />
     <Compile Include="Директории\ModeFlip.cs" />
     <Compile Include="Директории\Transports.cs" />
     <EmbeddedResource Include="FormParking.resx">
       <DependentUpon>FormParking.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_TransportConfig.resx">
+      <DependentUpon>Form_TransportConfig.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

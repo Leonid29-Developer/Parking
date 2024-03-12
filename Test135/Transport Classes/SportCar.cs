@@ -25,6 +25,19 @@ namespace Test135
             : base(type, maxSpeed, weight, NewMainColor)
         { DopColor = NewDopColor; _size = new Size(110, 70); _countLines = CountLine; LineColor = NewLineColor; }
 
+        /// <summary>Изменение цвета транспорта</summary>
+        /// <param name="NewColor">Назначаемый цвет</param>
+        /// <param name="TypeColor">Тип назначаемого цвета</param>
+        public override void SetColor(Color NewColor, TypesСolors TypeColor)
+        {
+            switch (TypeColor)
+            {
+                case TypesСolors.MainColor: MainColor = NewColor; break;
+                case TypesСolors.DopColor: DopColor = NewColor; break;
+                case TypesСolors.LineColor: LineColor = NewColor; break;
+            }
+        }
+
         /// <summary> Метод отрисовки машины </summary>
         /// <param name="Grap_Transport">Элемент управления - Интерфейс</param>
         public override void Draw(Graphics Grap_Transport)

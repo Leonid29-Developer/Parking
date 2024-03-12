@@ -121,5 +121,10 @@ namespace Test135
         }
 
         private void ListLevels_SelectedIndexChanged(object sender, EventArgs e) => Draw();
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            new Form_TransportConfig().ShowDialog();
+        }
     }
 }

@@ -65,6 +65,11 @@ namespace Test135
             }
         }
 
+        /// <summary>Изменение цвета транспорта</summary>
+        /// <param name="NewColor">Назначаемый цвет</param>
+        /// /// <param name="TypeColor">Тип назначаемого цвета</param>
+        public abstract void SetColor(Color NewColor, TypesСolors TypeColor);
+
         /// <summary> Метод отрисовки траспорта </summary>
         /// <param name="Grap_Transport">Элемент управления - Интерфейс</param>
         public abstract void Draw(Graphics Grap_Transport);

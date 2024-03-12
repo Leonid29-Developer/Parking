@@ -5,6 +5,8 @@ namespace Test135
 {
     internal static class Program
     {
+        public delegate void TransportDelegate(ITransport Transport);
+
         /// <summary> Главная точка входа для приложения. </summary>
         [STAThread]
         static void Main()

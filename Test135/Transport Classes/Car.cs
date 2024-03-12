@@ -19,6 +19,11 @@ namespace Test135
         /// <summary> Получение размера автомобиля </summary>
         public override Size GetSize() => _size;
 
+        /// <summary>Изменение цвета транспорта</summary>
+        /// <param name="NewColor">Назначаемый цвет</param>
+        /// /// <param name="TypeColor">Тип назначаемого цвета</param>
+        public override void SetColor(Color NewColor, TypesСolors TypeColor) => MainColor = NewColor;
+
         /// <summary> Метод отрисовки машины </summary>
         /// <param name="Grap_Transport">Элемент управления - Интерфейс</param>
         public override void Draw(Graphics Grap_Transport)
