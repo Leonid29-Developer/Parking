@@ -29,17 +29,15 @@
         private void InitializeComponent()
         {
             this.pictureBoxParking = new System.Windows.Forms.PictureBox();
-            this.Create1 = new System.Windows.Forms.Button();
-            this.Create2 = new System.Windows.Forms.Button();
-            this.Create3 = new System.Windows.Forms.Button();
             this.pictureBoxTakeCar = new System.Windows.Forms.PictureBox();
-            this.UP = new System.Windows.Forms.Button();
+            this.Button_UPTransport = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.ListLevels = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.AddBegin = new System.Windows.Forms.Button();
-            this.AddEnd = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.Button_AddBeginTransport = new System.Windows.Forms.Button();
+            this.Button_AddEndTransport = new System.Windows.Forms.Button();
+            this.Create_Transport = new System.Windows.Forms.Button();
+            this.Button_ClearTransport = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxParking)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTakeCar)).BeginInit();
             this.SuspendLayout();
@@ -56,45 +54,6 @@
             this.pictureBoxParking.TabIndex = 0;
             this.pictureBoxParking.TabStop = false;
             // 
-            // Create1
-            // 
-            this.Create1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Create1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Create1.Location = new System.Drawing.Point(988, 151);
-            this.Create1.Margin = new System.Windows.Forms.Padding(12);
-            this.Create1.Name = "Create1";
-            this.Create1.Size = new System.Drawing.Size(220, 50);
-            this.Create1.TabIndex = 1;
-            this.Create1.Text = "Создать транспорт #1";
-            this.Create1.UseVisualStyleBackColor = true;
-            this.Create1.Click += new System.EventHandler(this.buttonSetCar_Click);
-            // 
-            // Create2
-            // 
-            this.Create2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Create2.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Create2.Location = new System.Drawing.Point(988, 225);
-            this.Create2.Margin = new System.Windows.Forms.Padding(12);
-            this.Create2.Name = "Create2";
-            this.Create2.Size = new System.Drawing.Size(220, 50);
-            this.Create2.TabIndex = 2;
-            this.Create2.Text = "Создать транспорт #2";
-            this.Create2.UseVisualStyleBackColor = true;
-            this.Create2.Click += new System.EventHandler(this.buttonSetSportCar_Click);
-            // 
-            // Create3
-            // 
-            this.Create3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Create3.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Create3.Location = new System.Drawing.Point(988, 299);
-            this.Create3.Margin = new System.Windows.Forms.Padding(12);
-            this.Create3.Name = "Create3";
-            this.Create3.Size = new System.Drawing.Size(220, 50);
-            this.Create3.TabIndex = 3;
-            this.Create3.Text = "Создать транспорт #3";
-            this.Create3.UseVisualStyleBackColor = true;
-            this.Create3.Click += new System.EventHandler(this.buttonSetCruiser_Click);
-            // 
             // pictureBoxTakeCar
             // 
             this.pictureBoxTakeCar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -105,28 +64,29 @@
             this.pictureBoxTakeCar.TabIndex = 4;
             this.pictureBoxTakeCar.TabStop = false;
             // 
-            // UP
+            // Button_UPTransport
             // 
-            this.UP.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.UP.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.UP.Location = new System.Drawing.Point(988, 454);
-            this.UP.Margin = new System.Windows.Forms.Padding(12);
-            this.UP.Name = "UP";
-            this.UP.Size = new System.Drawing.Size(220, 45);
-            this.UP.TabIndex = 5;
-            this.UP.Text = "Забрать транспорт";
-            this.UP.UseVisualStyleBackColor = true;
-            this.UP.Click += new System.EventHandler(this.buttonTakeCar_Click);
+            this.Button_UPTransport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.Button_UPTransport.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Button_UPTransport.Location = new System.Drawing.Point(988, 431);
+            this.Button_UPTransport.Margin = new System.Windows.Forms.Padding(12);
+            this.Button_UPTransport.Name = "Button_UPTransport";
+            this.Button_UPTransport.Size = new System.Drawing.Size(108, 54);
+            this.Button_UPTransport.TabIndex = 5;
+            this.Button_UPTransport.Text = "Забрать транспорт";
+            this.Button_UPTransport.UseVisualStyleBackColor = true;
+            this.Button_UPTransport.Click += new System.EventHandler(this.Button_UPTransport_Click);
             // 
             // textBox1
             // 
             this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox1.Location = new System.Drawing.Point(1060, 417);
+            this.textBox1.Location = new System.Drawing.Point(1006, 387);
             this.textBox1.Margin = new System.Windows.Forms.Padding(12);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(75, 29);
             this.textBox1.TabIndex = 6;
+            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // ListLevels
             // 
@@ -149,59 +109,72 @@
             this.label1.Text = "Текущий уровень парковки";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // AddBegin
+            // Button_AddBeginTransport
             // 
-            this.AddBegin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.AddBegin.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.AddBegin.Location = new System.Drawing.Point(988, 509);
-            this.AddBegin.Margin = new System.Windows.Forms.Padding(12);
-            this.AddBegin.Name = "AddBegin";
-            this.AddBegin.Size = new System.Drawing.Size(108, 45);
-            this.AddBegin.TabIndex = 9;
-            this.AddBegin.Text = "Добавить в начало";
-            this.AddBegin.UseVisualStyleBackColor = true;
+            this.Button_AddBeginTransport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.Button_AddBeginTransport.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Button_AddBeginTransport.Location = new System.Drawing.Point(988, 500);
+            this.Button_AddBeginTransport.Margin = new System.Windows.Forms.Padding(12);
+            this.Button_AddBeginTransport.Name = "Button_AddBeginTransport";
+            this.Button_AddBeginTransport.Size = new System.Drawing.Size(108, 54);
+            this.Button_AddBeginTransport.TabIndex = 9;
+            this.Button_AddBeginTransport.Text = "Добавить в начало";
+            this.Button_AddBeginTransport.UseVisualStyleBackColor = true;
+            this.Button_AddBeginTransport.Click += new System.EventHandler(this.Button_AddBeginTransport_Click);
             // 
-            // AddEnd
+            // Button_AddEndTransport
             // 
-            this.AddEnd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.AddEnd.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.AddEnd.Location = new System.Drawing.Point(1100, 509);
-            this.AddEnd.Margin = new System.Windows.Forms.Padding(12);
-            this.AddEnd.Name = "AddEnd";
-            this.AddEnd.Size = new System.Drawing.Size(108, 45);
-            this.AddEnd.TabIndex = 10;
-            this.AddEnd.Text = "Добавить в конец";
-            this.AddEnd.UseVisualStyleBackColor = true;
+            this.Button_AddEndTransport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.Button_AddEndTransport.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Button_AddEndTransport.Location = new System.Drawing.Point(1100, 500);
+            this.Button_AddEndTransport.Margin = new System.Windows.Forms.Padding(12);
+            this.Button_AddEndTransport.Name = "Button_AddEndTransport";
+            this.Button_AddEndTransport.Size = new System.Drawing.Size(108, 54);
+            this.Button_AddEndTransport.TabIndex = 10;
+            this.Button_AddEndTransport.Text = "Добавить в конец";
+            this.Button_AddEndTransport.UseVisualStyleBackColor = true;
+            this.Button_AddEndTransport.Click += new System.EventHandler(this.Button_AddEndTransport_Click);
             // 
-            // button1
+            // Create_Transport
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(988, 361);
-            this.button1.Margin = new System.Windows.Forms.Padding(12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(220, 50);
-            this.button1.TabIndex = 11;
-            this.button1.Text = "Создать транспорт";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.Create_Transport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.Create_Transport.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Create_Transport.Location = new System.Drawing.Point(988, 151);
+            this.Create_Transport.Margin = new System.Windows.Forms.Padding(12);
+            this.Create_Transport.Name = "Create_Transport";
+            this.Create_Transport.Size = new System.Drawing.Size(220, 50);
+            this.Create_Transport.TabIndex = 11;
+            this.Create_Transport.Text = "Создать транспорт";
+            this.Create_Transport.UseVisualStyleBackColor = true;
+            this.Create_Transport.Click += new System.EventHandler(this.Button_SetTransport_Click);
+            // 
+            // Button_ClearTransport
+            // 
+            this.Button_ClearTransport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.Button_ClearTransport.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Button_ClearTransport.Location = new System.Drawing.Point(1100, 431);
+            this.Button_ClearTransport.Margin = new System.Windows.Forms.Padding(12);
+            this.Button_ClearTransport.Name = "Button_ClearTransport";
+            this.Button_ClearTransport.Size = new System.Drawing.Size(108, 54);
+            this.Button_ClearTransport.TabIndex = 12;
+            this.Button_ClearTransport.Text = "Забыть транспорт";
+            this.Button_ClearTransport.UseVisualStyleBackColor = true;
+            this.Button_ClearTransport.Click += new System.EventHandler(this.Button_ClearTransport_Click);
             // 
             // FormParking
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1220, 697);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.AddEnd);
-            this.Controls.Add(this.AddBegin);
+            this.Controls.Add(this.Button_ClearTransport);
+            this.Controls.Add(this.Create_Transport);
+            this.Controls.Add(this.Button_AddEndTransport);
+            this.Controls.Add(this.Button_AddBeginTransport);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.ListLevels);
             this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.UP);
+            this.Controls.Add(this.Button_UPTransport);
             this.Controls.Add(this.pictureBoxTakeCar);
-            this.Controls.Add(this.Create3);
-            this.Controls.Add(this.Create2);
-            this.Controls.Add(this.Create1);
             this.Controls.Add(this.pictureBoxParking);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Name = "FormParking";
@@ -217,16 +190,14 @@
         #endregion
 
         private System.Windows.Forms.PictureBox pictureBoxParking;
-        private System.Windows.Forms.Button Create1;
-        private System.Windows.Forms.Button Create2;
-        private System.Windows.Forms.Button Create3;
         private System.Windows.Forms.PictureBox pictureBoxTakeCar;
-        private System.Windows.Forms.Button UP;
+        private System.Windows.Forms.Button Button_UPTransport;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.ListBox ListLevels;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button AddBegin;
-        private System.Windows.Forms.Button AddEnd;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button Button_AddBeginTransport;
+        private System.Windows.Forms.Button Button_AddEndTransport;
+        private System.Windows.Forms.Button Create_Transport;
+        private System.Windows.Forms.Button Button_ClearTransport;
     }
 }

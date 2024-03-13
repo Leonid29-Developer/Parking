@@ -1,14 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace Test135
 {
@@ -16,6 +8,9 @@ namespace Test135
     {
         /// <summary> Переменная-выбранная машина </summary>
         ITransport Transport = null;
+
+        /// <summary> Событие </summary>
+        private event TransportDelegate EventAddCar;
 
         public Form_TransportConfig()
         { InitializeComponent(); Size = new Size(595, 310); }
@@ -26,16 +21,28 @@ namespace Test135
             if (Transport != null)
             {
                 Bitmap bmp = new Bitmap(Picture_Transport.Width, Picture_Transport.Height);
-                Graphics gr = Graphics.FromImage(bmp); Textures.Drawing(gr, Transport); 
+                Graphics gr = Graphics.FromImage(bmp); Textures.Drawing(gr, Transport);
                 Picture_Transport.Image = bmp;
             }
         }
 
+        /// <summary>  Добавление события </summary>
+        public void AddEvent(TransportDelegate ev)
+        {
+            if (EventAddCar == null)
+            {
+                EventAddCar = new TransportDelegate(ev);
+            }
+            else
+            {
+                EventAddCar += ev;
+            }
+        }
+
+
         /// <summary> Передаем информацию при нажатии на Label </summary>
         private void labelTransport_MouseDown(object sender, MouseEventArgs e)
-        {
-            (sender as Control).DoDragDrop((sender as Control).Tag, DragDropEffects.Move | DragDropEffects.Copy);
-        }
+        { (sender as Control).DoDragDrop((sender as Control).Tag, DragDropEffects.Move | DragDropEffects.Copy); }
 
         /// <summary> Проверка получаемой информации (ее типа на соответствие требуемому) </summary>
         private void panelCar_DragEnter(object sender, DragEventArgs e)
@@ -58,12 +65,14 @@ namespace Test135
                         Size = new Size(595, 373);
                     }
                     break;
+
                 case "SportCar":
                     {
                         Transport = new SportCar(Transports.SportCar, 100, 1000, Color.Red, Color.Black, Rand.Next(1, 4), Color.White);
                         Size = new Size(595, 522);
                     }
                     break;
+
                 case "Cruiser":
                     {
                         Bitmap BM_Flag = new Bitmap(15, 9); Graphics Grap_Flag = Graphics.FromImage(BM_Flag);
@@ -91,7 +100,7 @@ namespace Test135
                 default: Offset = new Point(0, 0); break;
             }
 
-            Transport.SetPosition (new Point(Offset.X, Offset.Y), new Size(0,0));
+            Transport.SetPosition(new Point(Offset.X, Offset.Y), new Size(0, 0));
             Draw();
         }
 
@@ -109,5 +118,11 @@ namespace Test135
             if (dialog.ShowDialog() == DialogResult.OK) Transport.SetColor(dialog.Color, Type);
             (sender as Control).BackColor = dialog.Color; Draw();
         }
+
+        /// <summary> Добавление транспорта на парковку </summary>
+        private void Button_Create_Click(object sender, EventArgs e)
+        { EventAddCar?.Invoke(Transport); Close(); }
+
+        private void Button_Сancel_Click(object sender, EventArgs e) => Close();
     }
 }

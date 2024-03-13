@@ -53,63 +53,39 @@ namespace Test135
             }
         }
 
-        /// <summary> Обработка нажатия кнопки "Припарковать автомобиль" </summary>
-        private void buttonSetCar_Click(object sender, EventArgs e)
+        private void ListLevels_SelectedIndexChanged(object sender, EventArgs e) => Draw();
+
+        /// <summary>  Обработка нажатия кнопки «Создать транспорт»</summary>
+        private void Button_SetTransport_Click(object sender, EventArgs e)
         {
-            ColorDialog dialog = new ColorDialog();
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                var car = new Car(Transports.Car, 100, 1000, dialog.Color);
-                _ = parking[ListLevels.SelectedIndex] + car; Draw();
-            }
+            Form_TransportConfig SetForm = new Form_TransportConfig();
+            SetForm.AddEvent(AddCar); SetForm.Show();
         }
 
-        /// <summary> Обработка нажатия кнопки "Припарковать гоночный автомобиль" </summary>
-        private void buttonSetSportCar_Click(object sender, EventArgs e)
+        /// <summary> Метод добавления машины </summary>
+        private void AddCar(ITransport Transport)
         {
-            ColorDialog dialog = new ColorDialog();
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                ColorDialog dialogDop = new ColorDialog();
-                if (dialogDop.ShowDialog() == DialogResult.OK)
-                {
-                    Random Rand = new Random();
-                    var car = new SportCar(Transports.SportCar, 100, 1000, dialog.Color, dialogDop.Color, Rand.Next(1, 4), Color.White);
-                    _ = parking[ListLevels.SelectedIndex] + car; Draw();
-                }
-            }
+            if (Transport != null && ListLevels.SelectedIndex > -1)
+                if (parking[ListLevels.SelectedIndex] + Transport > -1) Draw();
+                else
+                    MessageBox.Show("Не удалось создать транспорт", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        /// <summary> Обработка нажатия кнопки "Припарковать крейсер" </summary>
-        private void buttonSetCruiser_Click(object sender, EventArgs e)
-        {
-            ColorDialog dialog = new ColorDialog();
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                Bitmap BM_Flag = new Bitmap(15, 9); Graphics Grap_Flag = Graphics.FromImage(BM_Flag);
+        private ITransport Temp_Transport { get; set; }
 
-                Grap_Flag.FillRectangle(new SolidBrush(Color.White), 0, 0, 15, 3);
-                Grap_Flag.FillRectangle(new SolidBrush(Color.Blue), 0, 3, 15, 3);
-                Grap_Flag.FillRectangle(new SolidBrush(Color.Red), 0, 6, 15, 3);
-                Grap_Flag.FillRectangle(new SolidBrush(Color.Gold), 10, 3, 3, 3);
-
-                var car = new Cruiser(Transports.Cruiser, 100, 1000, dialog.Color, BM_Flag);
-                _ = parking[ListLevels.SelectedIndex] + car; Draw();
-            }
-        }
-
-        /// <summary> Обработка нажатия кнопки "Забрать" </summary>
-        private void buttonTakeCar_Click(object sender, EventArgs e)
+        /// <summary> Обработка нажатия кнопки «Забрать транспорт»</summary>
+        private void Button_UPTransport_Click(object sender, EventArgs e)
         {
             if (textBox1.Text != "")
             {
-                var car = parking[ListLevels.SelectedIndex] - Convert.ToInt32(textBox1.Text);
-                if (car != null)
+                var Transport = parking[ListLevels.SelectedIndex] - Convert.ToInt32(textBox1.Text);
+                Temp_Transport = Transport;
+                if (Transport != null)
                 {
                     Bitmap bmp = new Bitmap(pictureBoxTakeCar.Width, pictureBoxTakeCar.Height);
                     Graphics gr = Graphics.FromImage(bmp);
-                    car.SetPosition(new Point(5, 5), new Size(pictureBoxTakeCar.Width, pictureBoxTakeCar.Height));
-                    car.Draw(gr); pictureBoxTakeCar.Image = bmp;
+                    Transport.SetPosition(new Point(5, 5), new Size(pictureBoxTakeCar.Width, pictureBoxTakeCar.Height));
+                    Transport.Draw(gr); pictureBoxTakeCar.Image = bmp;
                 }
                 else
                 {
@@ -120,11 +96,11 @@ namespace Test135
             }
         }
 
-        private void ListLevels_SelectedIndexChanged(object sender, EventArgs e) => Draw();
-
-        private void button1_Click(object sender, EventArgs e)
+        /// <summary> Обработка нажатия кнопки «Забыть транспорт»</summary>
+        private void Button_ClearTransport_Click(object sender, EventArgs e)
         {
-            new Form_TransportConfig().ShowDialog();
+            Bitmap bmp = new Bitmap(pictureBoxTakeCar.Width, pictureBoxTakeCar.Height);
+            pictureBoxTakeCar.Image = bmp; Temp_Transport = null;
         }
     }
 }

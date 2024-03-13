@@ -42,6 +42,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.LineColor = new System.Windows.Forms.Panel();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.Button_Create = new System.Windows.Forms.Button();
+            this.Button_Сancel = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.Picture_Transport)).BeginInit();
             this.panel1.SuspendLayout();
             this.MainColor.SuspendLayout();
@@ -219,11 +221,35 @@
             this.pictureBox2.TabIndex = 7;
             this.pictureBox2.TabStop = false;
             // 
+            // Button_Create
+            // 
+            this.Button_Create.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Button_Create.Location = new System.Drawing.Point(27, 272);
+            this.Button_Create.Name = "Button_Create";
+            this.Button_Create.Size = new System.Drawing.Size(101, 48);
+            this.Button_Create.TabIndex = 19;
+            this.Button_Create.Text = "Создать";
+            this.Button_Create.UseVisualStyleBackColor = true;
+            this.Button_Create.Click += new System.EventHandler(this.Button_Create_Click);
+            // 
+            // Button_Сancel
+            // 
+            this.Button_Сancel.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Button_Сancel.Location = new System.Drawing.Point(142, 272);
+            this.Button_Сancel.Name = "Button_Сancel";
+            this.Button_Сancel.Size = new System.Drawing.Size(105, 48);
+            this.Button_Сancel.TabIndex = 20;
+            this.Button_Сancel.Text = "Отмена";
+            this.Button_Сancel.UseVisualStyleBackColor = true;
+            this.Button_Сancel.Click += new System.EventHandler(this.Button_Сancel_Click);
+            // 
             // Form_TransportConfig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(579, 483);
+            this.Controls.Add(this.Button_Сancel);
+            this.Controls.Add(this.Button_Create);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.LineColor);
@@ -262,5 +288,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Panel LineColor;
         private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.Button Button_Create;
+        private System.Windows.Forms.Button Button_Сancel;
     }
 }

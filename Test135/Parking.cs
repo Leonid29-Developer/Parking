@@ -76,36 +76,40 @@ namespace Test135
         public static int operator +(Parking<T> p, T Transport)
         {
             if (p._places.Count == p.PlaceCount.X * p.PlaceCount.Y) return 0;
-            Point Offset = new Point(0, 0);
 
             for (int i = 0; i < p.PlaceCount.X * p.PlaceCount.Y; i++)
                 if (p.CheckFreePlace(i))
-                {
-                    p._places.Add(i, Transport);
-
-                    switch (p._places[i].GetTypeTransport())
-                    {
-                        case Transports.Car: Offset = new Point(60, 30); break;
-                        case Transports.SportCar: Offset = new Point(55, 25); break;
-                        default: Offset = new Point(0, 0); break;
-                    }
-
-                    Random Rand = new Random();
-                    switch (Rand.Next(1, 3))
-                    {
-                        case 1: p._places[i].MoveTransport(Directions.Left); break;
-                        case 2: p._places[i].MoveTransport(Directions.Right); break;
-                    }
-
-                    p._places[i].SetPosition
-                        (new Point(i / p.PlaceCount.Y * (_placeSizeWidth + Distance) + Offset.X, i % p.PlaceCount.Y * _placeSizeHeight + Offset.Y),
-                        new Size(p.PictureSize.Width, p.PictureSize.Height));
-                    return i;
-                }
+                { p._places.Add(i, Transport); p.TransportParameters(p, i); return i; }
 
             MessageBox.Show("Нет свободных мест", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return -1;
         }
+
+        /// <summary> Назначение параметров согласно типу транспорта и его нахождению на парковке </summary>
+        /// <param name="p">Парковка</param>
+        /// <param name="i">Индекс объекта в парковке</param>
+        private void TransportParameters(Parking<T> p, int i)
+        {
+            Point Offset = new Point(0, 0);
+
+            switch (p._places[i].GetTypeTransport())
+            {
+                case Transports.Car: Offset = new Point(60, 30); break;
+                case Transports.SportCar: Offset = new Point(55, 25); break;
+            }
+
+            Random Rand = new Random();
+            switch (Rand.Next(1, 3))
+            {
+                case 1: p._places[i].MoveTransport(Directions.Left); break;
+                case 2: p._places[i].MoveTransport(Directions.Right); break;
+            }
+
+            p._places[i].SetPosition
+                (new Point(i / p.PlaceCount.Y * (_placeSizeWidth + Distance) + Offset.X, i % p.PlaceCount.Y * _placeSizeHeight + Offset.Y),
+                new Size(p.PictureSize.Width, p.PictureSize.Height));
+        }
+
 
         /// <summary> Перегрузка оператора вычитания <br/> 
         /// Логика действия: с парковки забираем автомобиль </summary>
