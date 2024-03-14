@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Windows.Forms;
 
 namespace Test135
 {
@@ -76,10 +75,7 @@ namespace Test135
         public static int operator +(Parking<T> p, T Transport)
         {
             if (p._places.Count == p.PlaceCount.X * p.PlaceCount.Y)
-            {
-                MessageBox.Show("Нет свободных мест", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return 0;
-            }
+            { new Loggers.Message.Errors.ParkingCrowded(); return -1; }
 
             for (int i = 0; i < p.PlaceCount.X * p.PlaceCount.Y; i++)
                 if (p.CheckFreePlace(i))
@@ -117,16 +113,18 @@ namespace Test135
         /// Логика действия: с парковки забираем автомобиль </summary>
         /// <param name="p">Парковка</param>
         /// <param name="index">Индекс места, с которого пытаемся извлечь объект</ param>
-        public static T operator -(Parking<T> p, int index)
+        public static T operator -(Parking<T> p, int Index)
         {
-            if (index < 0 | index > p._places.Count) return null;
-            if (!p.CheckFreePlace(index))
+            if (Index < 0 | Index > p._places.Count)
+            { new Loggers.Message.Errors.InvalidParkingSpaceNumber(Index); return null; }
+            if (!p.CheckFreePlace(Index))
             {
-                T Transport = p._places[index];
-                p._places.Remove(index);
+                T Transport = p._places[Index];
+                p._places.Remove(Index);
                 return Transport;
             }
-            return null;
+            else
+            { new Loggers.Message.Errors.ParkingCrowded(); return null; }
         }
 
         /// <summary> Метод проверки заполнености парковочного места (ячейки массива) </summary>
@@ -175,18 +173,21 @@ namespace Test135
         }
 
         /// <summary> Индексатор </summary>
-        public T this[int index]
+        public T this[int Index]
         {
             get
             {
-                if (_places.ContainsKey(index))
-                    return _places[index];
-                return null;
+                if (_places.ContainsKey(Index))
+                    return _places[Index];
+                else
+                { new Loggers.Message.Errors.NoParkingPlaceFound(Index); return null; }
+
             }
             set
             {
-                if (CheckFreePlace(index))
-                { _places.Add(index, value); TransportParameters(this, index); }
+                if (CheckFreePlace(Index))
+                { _places.Add(Index, value); TransportParameters(this, Index); }
+                else new Loggers.Message.Errors.ParkingSpaceOccupied(Index);
             }
         }
 

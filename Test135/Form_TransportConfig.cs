@@ -29,16 +29,9 @@ namespace Test135
         /// <summary>  Добавление события </summary>
         public void AddEvent(TransportDelegate ev)
         {
-            if (EventAddCar == null)
-            {
-                EventAddCar = new TransportDelegate(ev);
-            }
-            else
-            {
-                EventAddCar += ev;
-            }
+            if (EventAddCar == null) EventAddCar = new TransportDelegate(ev);
+            else EventAddCar += ev;
         }
-
 
         /// <summary> Передаем информацию при нажатии на Label </summary>
         private void labelTransport_MouseDown(object sender, MouseEventArgs e)
@@ -121,7 +114,7 @@ namespace Test135
 
         /// <summary> Добавление транспорта на парковку </summary>
         private void Button_Create_Click(object sender, EventArgs e)
-        { EventAddCar?.Invoke(Transport); Close(); }
+        { EventAddCar.Invoke(Transport); Close(); }
 
         private void Button_Сancel_Click(object sender, EventArgs e) => Close();
     }

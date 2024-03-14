@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Text;
-using System.Windows.Forms;
 
 namespace Test135
 {
@@ -27,52 +26,63 @@ namespace Test135
         }
 
         /// <summary> Индексатор </summary>
-        public Parking<ITransport> this[int ind]
+        public Parking<ITransport> this[int Index]
         {
             get
             {
-                if (ind > -1 && ind < ParkingStages.Count)
-                    return ParkingStages[ind];
-                return null;
+                if (Index > -1 & Index < ParkingStages.Count)
+                    return ParkingStages[Index];
+                else
+                { new Loggers.Message.Errors.UnacceptableParkingLevelNumber(Index); return null; }
             }
         }
 
         /// <summary> Сохранение информации по транспорту на парковках в файл </summary>
         /// <param name="FileName">Путь и имя файла</param>
-        public bool SaveData(string FileLine)
+        public void SaveData(string FileLine)
         {
-            if (File.Exists($@"{FileLine}\PTP.txt"))
+            try
             {
-                File.Delete($@"{FileLine}\PTP.txt");
-                Directory.Delete($@"{FileLine}\Bitmap PT\", true);
-            }
-            using (FileStream FS = new FileStream($@"{FileLine}\PTP.txt", FileMode.Create))
-            {
-                //Записываем количество уровней
-                WriteToFile($"CountLeveles: {ParkingStages.Count}" + Environment.NewLine, FS);
-
-                int LevelNumber = 1;
-                foreach (var Level in ParkingStages)
+                if (File.Exists($@"{FileLine}\PTP.txt"))
                 {
-                    WriteToFile(Environment.NewLine + $"Level: {LevelNumber}" + Environment.NewLine, FS);
-                    for (int i = 0; i < Level.GetPlaceCount; i++)
+                    File.Delete($@"{FileLine}\PTP.txt");
+                    Directory.Delete($@"{FileLine}\Bitmap PT\", true);
+                }
+                using (FileStream FS = new FileStream($@"{FileLine}\PTP.txt", FileMode.Create))
+                {
+                    //Записываем количество уровней
+                    WriteToFile($"CountLeveles: {ParkingStages.Count}" + Environment.NewLine, FS);
+
+                    int LevelNumber = 1;
+                    foreach (var Level in ParkingStages)
                     {
-                        ITransport Transport = Level[i];
-                        if (Transport != null)
+                        WriteToFile(Environment.NewLine + $"Level: {LevelNumber}" + Environment.NewLine, FS);
+                        for (int i = 0; i < Level.GetPlaceCount; i++)
                         {
-                            WriteToFile($"{i + 1}: {Transport}" + Environment.NewLine, FS);
-                            if (Transport.GetTypeTransport() == Transports.Cruiser)
+                            ITransport Transport = Level[i];
+                            if (Transport != null)
                             {
-                                Bitmap BM = Transport.FlagBM;
-                                Directory.CreateDirectory($@"{FileLine}\Bitmap PT\");
-                                BM.Save($@"{FileLine}\Bitmap PT\{LevelNumber}_{i + 1}_{Transport.GetTypeTransport()}.png", ImageFormat.Png);
+                                WriteToFile($"{i + 1}: {Transport}" + Environment.NewLine, FS);
+                                if (Transport.GetTypeTransport() == Transports.Cruiser)
+                                {
+                                    Bitmap BM = Transport.FlagBM;
+                                    Directory.CreateDirectory($@"{FileLine}\Bitmap PT\");
+                                    BM.Save($@"{FileLine}\Bitmap PT\{LevelNumber}_{i + 1}_{Transport.GetTypeTransport()}.png", ImageFormat.Png);
+                                }
                             }
                         }
+                        LevelNumber++;
                     }
-                    LevelNumber++;
                 }
             }
-            return true;
+            catch
+            {
+                new Loggers.Message.Errors.SaveData();
+            }
+            finally
+            {
+                new Loggers.Message.Information.SaveData();
+            }
         }
 
         /// <summary> Метод записи информации в файл </summary>
@@ -88,95 +98,102 @@ namespace Test135
         /// <param name="FileLine">Путь и имя файла</param>
         public bool LoadData(string FileLine)
         {
-            if (!File.Exists($@"{FileLine}\PTP.txt")) return false;
-
-            string BufferTextFromFile = "";
-            using (FileStream fs = new FileStream($@"{FileLine}\PTP.txt", FileMode.Open))
+            try
             {
-                byte[] b = new byte[fs.Length];
-                UTF8Encoding temp = new UTF8Encoding(true);
-                while (fs.Read(b, 0, b.Length) > 0)
-                    BufferTextFromFile += temp.GetString(b);
-            }
+                if (!File.Exists($@"{FileLine}\PTP.txt")) return false;
 
-            BufferTextFromFile = BufferTextFromFile.Replace("\r", "");
-            BufferTextFromFile = BufferTextFromFile.Replace(" ", "");
-
-            //MessageBox.Show(BufferTextFromFile);
-
-            var strs = BufferTextFromFile.Split('\n');
-            if (strs[0].Contains("CountLeveles"))
-            {
-                // Количество уровней
-                int СountStages = Convert.ToInt32(strs[0].Split(':')[1]);
-
-                if (ParkingStages != null) ParkingStages.Clear();
-
-                ParkingStages = new List<Parking<ITransport>>();
-                for (int i = 0; i < СountStages; ++i)
-                    ParkingStages.Add(new Parking<ITransport>(new Size(ParkingSize.Width, ParkingSize.Height)));
-            }
-            else return false;
-
-            int СounterLevel = -1, NumberPlace = -1;
-            ITransport Transport = null;
-            for (int i = 1; i < strs.Length; ++i)
-            {
-                if (strs[i].Contains("Level")) { СounterLevel++; continue; }
-                if (string.IsNullOrEmpty(strs[i])) continue;
-                if (Transport != null & strs[i].Contains("End."))
+                string BufferTextFromFile = "";
+                using (FileStream fs = new FileStream($@"{FileLine}\PTP.txt", FileMode.Open))
                 {
-                    ParkingStages[СounterLevel][NumberPlace] = Transport;
-                    Transport = null; continue;
+                    byte[] b = new byte[fs.Length];
+                    UTF8Encoding temp = new UTF8Encoding(true);
+                    while (fs.Read(b, 0, b.Length) > 0)
+                        BufferTextFromFile += temp.GetString(b);
                 }
 
-                if (strs[i].Split(':').Length == 3)
+                BufferTextFromFile = BufferTextFromFile.Replace("\r", "");
+                BufferTextFromFile = BufferTextFromFile.Replace(" ", "");
+
+                //MessageBox.Show(BufferTextFromFile);
+
+                var strs = BufferTextFromFile.Split('\n');
+                if (strs[0].Contains("CountLeveles"))
                 {
-                    var strsParameters = strs[i].Split(':')[2].Split('#');
-                    NumberPlace = Convert.ToInt32(strs[i].Split(':')[0]) - 1;
+                    // Количество уровней
+                    int СountStages = Convert.ToInt32(strs[0].Split(':')[1]);
 
-                    switch (strs[i].Split(':')[1])
+                    if (ParkingStages != null) ParkingStages.Clear();
+
+                    ParkingStages = new List<Parking<ITransport>>();
+                    for (int i = 0; i < СountStages; ++i)
+                        ParkingStages.Add(new Parking<ITransport>(new Size(ParkingSize.Width, ParkingSize.Height)));
+                }
+                else return false;
+
+                int СounterLevel = -1, NumberPlace = -1;
+                ITransport Transport = null;
+                for (int i = 1; i < strs.Length; ++i)
+                {
+                    if (strs[i].Contains("Level")) { СounterLevel++; continue; }
+                    if (string.IsNullOrEmpty(strs[i])) continue;
+                    if (Transport != null & strs[i].Contains("End."))
                     {
-                        case "Car":
-                            Transport = new Car
-                                (Transports.Car, Convert.ToInt32(strsParameters[1]), Convert.ToInt32(strsParameters[2]), Color.Red);
-                            break;
-
-                        case "SportCar":
-                            Transport = new SportCar
-                                (Transports.SportCar, Convert.ToInt32(strsParameters[1]), Convert.ToInt32(strsParameters[2]), Color.Red,
-                                Color.Black, Convert.ToInt32(strsParameters[3]), Color.White);
-                            break;
-
-                        case "Cruiser":
-                            {
-                                string BitmapPath = $@"{FileLine}\Bitmap PT\{СounterLevel + 1}_{NumberPlace + 1}_Cruiser.png";
-                                Bitmap BM_Flag = new Bitmap(15, 9);
-                                if (File.Exists(BitmapPath)) BM_Flag = (Bitmap)Image.FromFile(BitmapPath);
-
-                                Transport = new Cruiser(Transports.Cruiser, Convert.ToInt32(strsParameters[1]), (float)Convert.ToDouble(strsParameters[2]), Color.Red, BM_Flag);
-                            }
-                            break;
+                        ParkingStages[СounterLevel][NumberPlace] = Transport;
+                        Transport = null; continue;
                     }
 
-                    switch (strsParameters[0])
+                    if (strs[i].Split(':').Length == 3)
                     {
-                        case "Left": Transport.MoveTransport(Directions.Left); break;
-                        case "Right": Transport.MoveTransport(Directions.Right); break;
+                        var strsParameters = strs[i].Split(':')[2].Split('#');
+                        NumberPlace = Convert.ToInt32(strs[i].Split(':')[0]) - 1;
+
+                        switch (strs[i].Split(':')[1])
+                        {
+                            case "Car":
+                                Transport = new Car
+                                    (Transports.Car, Convert.ToInt32(strsParameters[1]), Convert.ToInt32(strsParameters[2]), Color.Red);
+                                break;
+
+                            case "SportCar":
+                                Transport = new SportCar
+                                    (Transports.SportCar, Convert.ToInt32(strsParameters[1]), Convert.ToInt32(strsParameters[2]), Color.Red,
+                                    Color.Black, Convert.ToInt32(strsParameters[3]), Color.White);
+                                break;
+
+                            case "Cruiser":
+                                {
+                                    string BitmapPath = $@"{FileLine}\Bitmap PT\{СounterLevel + 1}_{NumberPlace + 1}_Cruiser.png";
+                                    Bitmap BM_Flag = new Bitmap(15, 9);
+                                    if (File.Exists(BitmapPath)) BM_Flag = (Bitmap)Image.FromFile(BitmapPath);
+
+                                    Transport = new Cruiser(Transports.Cruiser, Convert.ToInt32(strsParameters[1]), (float)Convert.ToDouble(strsParameters[2]), Color.Red, BM_Flag);
+                                }
+                                break;
+                        }
+
+                        switch (strsParameters[0])
+                        {
+                            case "Left": Transport.MoveTransport(Directions.Left); break;
+                            case "Right": Transport.MoveTransport(Directions.Right); break;
+                        }
+                    }
+                    else
+                    {
+                        if (Transport == null) break;
+
+                        string BufferText = strs[i].Split(':')[1].Replace("[", "");
+                        BufferText = BufferText.Replace("]", "");
+                        var strsParameters = BufferText.Split('*');
+                        SetColor(Transport, strs[i].Split(':')[0], strsParameters);
                     }
                 }
-                else
-                {
-                    if (Transport == null) break;
 
-                    string BufferText = strs[i].Split(':')[1].Replace("[", "");
-                    BufferText = BufferText.Replace("]", "");
-                    var strsParameters = BufferText.Split('*');
-                    SetColor(Transport, strs[i].Split(':')[0], strsParameters);
-                }
+                return true;
             }
-
-            return true;
+            catch
+            {
+                return false;
+            }
         }
 
         /// <summary>  Назначение транспорту по типу цвета из ARGB </summary>

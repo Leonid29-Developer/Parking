@@ -47,6 +47,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Loggers\Message\Errors\SaveData.cs" />
+    <Compile Include="Loggers\Message\Errors\LoadData.cs" />
+    <Compile Include="Loggers\Message\Information\SaveData.cs" />
+    <Compile Include="Loggers\Message\Information\LoadData.cs" />
+    <Compile Include="Loggers\Message\Errors\UnacceptableParkingLevelNumber.cs" />
+    <Compile Include="Loggers\Message\Errors\ParkingSpaceOccupied.cs" />
+    <Compile Include="Loggers\Message\Errors\InvalidParkingSpaceNumber.cs" />
+    <Compile Include="Loggers\Message\Errors\NoParkingPlaceFound.cs" />
     <Compile Include="FormParking.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -61,12 +69,13 @@
     </Compile>
     <Compile Include="MultiLevelParking.cs" />
     <Compile Include="Parking.cs" />
-    <Compile Include="Transport Classes\Cruiser.cs" />
-    <Compile Include="Transport Classes\Car.cs" />
+    <Compile Include="Loggers\Message\Errors\ParkingCrowded.cs" />
+    <Compile Include="Классы Транспортов\Cruiser.cs" />
+    <Compile Include="Классы Транспортов\Car.cs" />
     <Compile Include="ITransport.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Transport Classes\SportCar.cs" />
+    <Compile Include="Классы Транспортов\SportCar.cs" />
     <Compile Include="Textures.cs" />
     <Compile Include="Vehicle.cs" />
     <Compile Include="Директории\TypesСolors.cs" />
@@ -100,6 +109,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Loggers\Crush\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
