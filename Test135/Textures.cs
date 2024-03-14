@@ -16,6 +16,17 @@ namespace Test135
 
             Selected_Transport.Draw(Grap_T);
 
+            switch (Selected_Transport.GetTypeTransport())
+            {
+                case Transports.Cruiser:
+                    {
+                        Point FlagPosition = new Point(95, 15);
+                        RF_BM(Grap_T, Selected_Transport.FlagBM, ModeFlip.None, FlagPosition);
+                        Grap_T.DrawRectangle(new Pen(Color.Black), FlagPosition.X, FlagPosition.Y, 15, 9);
+                    }
+                    break;
+            }
+
             //Grap_T.DrawRectangle(new Pen(Color.Black), 0, 0, Temp_Size.Width, Temp_Size.Height);
 
             switch (Selected_Transport.GetDirection())
@@ -28,8 +39,6 @@ namespace Test135
                     RF_BM(Grap, BiM, ModeFlip.None, Selected_Transport.GetPosition());
                     break;
             }
-
-            //PictureBackground.Refresh();
         }
 
         /// <summary> Метод. Отзеркаливание или переворот изображения и наложение его на интерфейс </summary>

@@ -102,7 +102,7 @@ namespace Test135
             BufferTextFromFile = BufferTextFromFile.Replace("\r", "");
             BufferTextFromFile = BufferTextFromFile.Replace(" ", "");
 
-            MessageBox.Show(BufferTextFromFile);
+            //MessageBox.Show(BufferTextFromFile);
 
             var strs = BufferTextFromFile.Split('\n');
             if (strs[0].Contains("CountLeveles"))
@@ -122,14 +122,11 @@ namespace Test135
             ITransport Transport = null;
             for (int i = 1; i < strs.Length; ++i)
             {
-                //MessageBox.Show($"{strs[i]}\n{СounterLevel} / {NumberPlace}");
-
                 if (strs[i].Contains("Level")) { СounterLevel++; continue; }
                 if (string.IsNullOrEmpty(strs[i])) continue;
                 if (Transport != null & strs[i].Contains("End."))
                 {
                     ParkingStages[СounterLevel][NumberPlace] = Transport;
-                    MessageBox.Show($"{СounterLevel} / {NumberPlace}\n{Transport.GetTypeTransport()}");
                     Transport = null; continue;
                 }
 
@@ -137,10 +134,6 @@ namespace Test135
                 {
                     var strsParameters = strs[i].Split(':')[2].Split('#');
                     NumberPlace = Convert.ToInt32(strs[i].Split(':')[0]) - 1;
-
-                    //MessageBox.Show($"strs[i].Split(':')[2]\n{strs[i].Split(':')[2]}");
-
-                    // MessageBox.Show(ParkingStages[СounterLevel][NumberPlace].ToString());
 
                     switch (strs[i].Split(':')[1])
                     {
@@ -157,12 +150,9 @@ namespace Test135
 
                         case "Cruiser":
                             {
-                                Bitmap BM_Flag = new Bitmap(15, 9); Graphics Grap_Flag = Graphics.FromImage(BM_Flag);
-
-                                Grap_Flag.FillRectangle(new SolidBrush(Color.White), 0, 0, 15, 3);
-                                Grap_Flag.FillRectangle(new SolidBrush(Color.Blue), 0, 3, 15, 3);
-                                Grap_Flag.FillRectangle(new SolidBrush(Color.Red), 0, 6, 15, 3);
-                                Grap_Flag.FillRectangle(new SolidBrush(Color.Gold), 10, 3, 3, 3);
+                                string BitmapPath = $@"{FileLine}\Bitmap PT\{СounterLevel + 1}_{NumberPlace + 1}_Cruiser.png";
+                                Bitmap BM_Flag = new Bitmap(15, 9);
+                                if (File.Exists(BitmapPath)) BM_Flag = (Bitmap)Image.FromFile(BitmapPath);
 
                                 Transport = new Cruiser(Transports.Cruiser, Convert.ToInt32(strsParameters[1]), (float)Convert.ToDouble(strsParameters[2]), Color.Red, BM_Flag);
                             }

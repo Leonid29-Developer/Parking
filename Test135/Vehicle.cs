@@ -71,7 +71,7 @@ namespace Test135
         public abstract void SetColor(Color NewColor, TypesСolors TypeColor);
 
         /// <summary> Получение параметра Bitmap транспорта </summary>
-        public abstract Bitmap FlagBM { get; }
+        public abstract Bitmap FlagBM { get; set; }
 
         /// <summary> Метод отрисовки траспорта </summary>
         /// <param name="Grap_Transport">Элемент управления - Интерфейс</param>

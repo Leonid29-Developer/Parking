@@ -42,12 +42,6 @@ namespace Test135
             }
 
             //Флаштог + Провода
-            Grap_Transport.FillRectangle(new SolidBrush(Color.White), 95, 15, 15, 3);
-            Grap_Transport.FillRectangle(new SolidBrush(Color.Blue), 95, 18, 15, 3);
-            Grap_Transport.FillRectangle(new SolidBrush(Color.Red), 95, 21, 15, 3);
-            Grap_Transport.FillRectangle(new SolidBrush(Color.Gold), 97, 18, 3, 3);
-            Grap_Transport.DrawRectangle(new Pen(Color.Black), 95, 15, 15, 9);
-
             Grap_Transport.DrawRectangle(new Pen(Color.DarkGray), 95, 30, 15, 1);
             Grap_Transport.DrawRectangle(new Pen(Color.DarkGray), 83, 31, 12, 1);
             Grap_Transport.DrawRectangle(new Pen(Color.DarkGray), 73, 32, 10, 1);
@@ -104,6 +98,10 @@ namespace Test135
             get
             {
                 return Flag;
+            }
+            set
+            {
+                Flag = value;
             }
         }
     }

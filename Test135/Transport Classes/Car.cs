@@ -81,6 +81,6 @@ namespace Test135
         }
 
         /// <summary> Получение параметра Bitmap транспорта </summary>
-        public override Bitmap FlagBM { get; }
+        public override Bitmap FlagBM { get; set; }
     }
 }
