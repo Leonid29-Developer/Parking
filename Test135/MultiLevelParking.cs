@@ -74,14 +74,12 @@ namespace Test135
                         LevelNumber++;
                     }
                 }
+
+                new Loggers.Message.Information.SaveData();
             }
             catch
             {
                 new Loggers.Message.Errors.SaveData();
-            }
-            finally
-            {
-                new Loggers.Message.Information.SaveData();
             }
         }
 

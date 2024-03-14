@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
@@ -97,13 +96,6 @@ namespace Test135
                 case Transports.SportCar: Offset = new Point(55, 25); break;
             }
 
-            Random Rand = new Random();
-            switch (Rand.Next(1, 3))
-            {
-                case 1: p._places[i].MoveTransport(Directions.Left); break;
-                case 2: p._places[i].MoveTransport(Directions.Right); break;
-            }
-
             p._places[i].SetPosition
                 (new Point(i / p.PlaceCount.Y * (_placeSizeWidth + Distance) + Offset.X, i % p.PlaceCount.Y * _placeSizeHeight + Offset.Y),
                 new Size(p.PictureSize.Width, p.PictureSize.Height));
@@ -191,12 +183,12 @@ namespace Test135
             }
         }
 
-        //<summary> Получение количества парковочных мест </summary>
+        ///<summary> Получение количества парковочных мест </summary>
         public int GetPlaceCount
         {
             get
             {
-                return PlaceCount.X * PlaceCount.Y;
+                return _places.Count;
             }
         }
     }
