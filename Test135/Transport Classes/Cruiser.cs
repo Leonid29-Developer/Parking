@@ -97,5 +97,14 @@ namespace Test135
             Grap_Transport.FillRectangle(new SolidBrush(Color.Black), 7, 92, 200, 2);
             Grap_Transport.DrawRectangle(new Pen(Color.Black), 7, 92, 200, 2);
         }
+
+        /// <summary> Получение параметра Bitmap транспорта </summary>
+        public override Bitmap FlagBM
+        {
+            get
+            {
+                return Flag;
+            }
+        }
     }
 }

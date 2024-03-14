@@ -49,6 +49,8 @@ namespace Test135
             {
                 Bitmap bmp = new Bitmap(pictureBoxParking.Width, pictureBoxParking.Height);
                 Graphics gr = Graphics.FromImage(bmp);
+
+
                 parking[ListLevels.SelectedIndex].Draw(gr); pictureBoxParking.Image = bmp;
             }
         }
@@ -101,6 +103,21 @@ namespace Test135
         {
             Bitmap bmp = new Bitmap(pictureBoxTakeCar.Width, pictureBoxTakeCar.Height);
             pictureBoxTakeCar.Image = bmp; Temp_Transport = null;
+        }
+
+        private void Button_Save_Click(object sender, EventArgs e)
+        {
+            parking.SaveData($@"{Application.StartupPath}");
+        }
+
+        private void Button_Load_Click(object sender, EventArgs e)
+        {
+            if (parking.LoadData($@"{Application.StartupPath}"))
+            {
+                MessageBox.Show("Загрузка данных завершилась успешно", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Draw();
+            }
+            else MessageBox.Show("Загрузка данных завершилась с ошибкой", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }

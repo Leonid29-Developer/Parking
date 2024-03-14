@@ -75,13 +75,16 @@ namespace Test135
         /// <param name="car">Добавляемый автомобиль</param>
         public static int operator +(Parking<T> p, T Transport)
         {
-            if (p._places.Count == p.PlaceCount.X * p.PlaceCount.Y) return 0;
+            if (p._places.Count == p.PlaceCount.X * p.PlaceCount.Y)
+            {
+                MessageBox.Show("Нет свободных мест", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return 0;
+            }
 
             for (int i = 0; i < p.PlaceCount.X * p.PlaceCount.Y; i++)
                 if (p.CheckFreePlace(i))
                 { p._places.Add(i, Transport); p.TransportParameters(p, i); return i; }
 
-            MessageBox.Show("Нет свободных мест", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return -1;
         }
 
@@ -109,7 +112,6 @@ namespace Test135
                 (new Point(i / p.PlaceCount.Y * (_placeSizeWidth + Distance) + Offset.X, i % p.PlaceCount.Y * _placeSizeHeight + Offset.Y),
                 new Size(p.PictureSize.Width, p.PictureSize.Height));
         }
-
 
         /// <summary> Перегрузка оператора вычитания <br/> 
         /// Логика действия: с парковки забираем автомобиль </summary>
@@ -169,6 +171,31 @@ namespace Test135
                     g.DrawLine
                     (PlanePen, StartPositionX, _placeSizeHeight + StartPositionY, StartPositionX + _placeSizeWidth, _placeSizeHeight + StartPositionY);
                 }
+            }
+        }
+
+        /// <summary> Индексатор </summary>
+        public T this[int index]
+        {
+            get
+            {
+                if (_places.ContainsKey(index))
+                    return _places[index];
+                return null;
+            }
+            set
+            {
+                if (CheckFreePlace(index))
+                { _places.Add(index, value); TransportParameters(this, index); }
+            }
+        }
+
+        //<summary> Получение количества парковочных мест </summary>
+        public int GetPlaceCount
+        {
+            get
+            {
+                return PlaceCount.X * PlaceCount.Y;
             }
         }
     }

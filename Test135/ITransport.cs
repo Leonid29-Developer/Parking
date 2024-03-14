@@ -25,10 +25,13 @@ namespace Test135
         /// <param name="Direction">Направление</param>
         void MoveTransport(Directions NewDirection);
 
-        /// <summary>Изменение цвета транспорта</summary>
+        /// <summary> Изменение цвета транспорта </summary>
         /// <param name="NewColor">Назначаемый цвет</param>
         /// <param name="TypeColor">Тип назначаемого цвета</param>
         void SetColor(Color NewColor, TypesСolors TypeColor);
+
+        /// <summary> Получение параметра Bitmap транспорта </summary>
+        Bitmap FlagBM { get; }
 
         /// <summary> Метод отрисовки траспорта </summary>
         /// <param name="Grap_Transport">Элемент управления - Интерфейс</param>

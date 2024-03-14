@@ -123,5 +123,14 @@ namespace Test135
                 Grap_Transport.DrawRectangle(pen, 5, 3, 10, 54);
             }
         }
+
+        public override string ToString()
+        {
+            return $"{Type}: {Direction}#{MaxSpeed}#{Weight}#{_countLines}" +
+                $"\n      MainColor: [{MainColor.A}*{MainColor.R}*{MainColor.G}*{MainColor.B}]" +
+                $"\n      DopColor: [{DopColor.A}*{DopColor.R}*{DopColor.G}*{DopColor.B}]" +
+                $"\n      LineColor: [{LineColor.A}*{LineColor.R}*{LineColor.G}*{LineColor.B}]" +
+                $"\n   End.";
+        }
     }
 }

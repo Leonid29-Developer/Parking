@@ -79,5 +79,8 @@ namespace Test135
                 Grap_Transport.DrawRectangle(pen, 5, 15, 15, 30);
             }
         }
+
+        /// <summary> Получение параметра Bitmap транспорта </summary>
+        public override Bitmap FlagBM { get; }
     }
 }

@@ -70,8 +70,18 @@ namespace Test135
         /// /// <param name="TypeColor">Тип назначаемого цвета</param>
         public abstract void SetColor(Color NewColor, TypesСolors TypeColor);
 
+        /// <summary> Получение параметра Bitmap транспорта </summary>
+        public abstract Bitmap FlagBM { get; }
+
         /// <summary> Метод отрисовки траспорта </summary>
         /// <param name="Grap_Transport">Элемент управления - Интерфейс</param>
         public abstract void Draw(Graphics Grap_Transport);
+
+        public override string ToString()
+        {
+            return $"{Type}: {Direction}#{MaxSpeed}#{Weight}" +
+                $"\n      MainColor: [{MainColor.A}*{MainColor.R}*{MainColor.G}*{MainColor.B}]" +
+                $"\n   End.";
+        }
     }
 }
