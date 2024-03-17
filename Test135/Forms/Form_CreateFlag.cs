@@ -19,7 +19,7 @@ namespace Test135
 
         private void Form_CreateFlag_Load(object sender, EventArgs e)
         {
-            BiM_Flag = new Bitmap(15, 9);
+            BiM_Flag = new Bitmap(15, 9); Form_Parking.LoG.Info($"Создание чистого флага");
 
             for (int I1 = 0; I1 < 9; I1++) for (int I2 = 0; I2 < 15; I2++)
                 {

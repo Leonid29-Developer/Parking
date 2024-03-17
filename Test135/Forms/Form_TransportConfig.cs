@@ -153,7 +153,10 @@ namespace Test135
         }
 
         private void SetFlag(Bitmap BM)
-        { Transport.FlagBM = BM; Draw(); }
+        {
+            Form_Parking.LoG.Info($"Создание индивидуального флага для текущего транспорта [{Transport.GetTypeTransport()}]");
+            Transport.FlagBM = BM; Draw(); 
+        }
 
         /// <summary> Добавление транспорта на парковку </summary>
         private void Button_Create_Click(object sender, EventArgs e)
