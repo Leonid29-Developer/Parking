@@ -18,6 +18,7 @@ namespace Test135
 
         /// <summary> Тип транспорта </summary>
         public Transports Type { protected set; get; }
+
         /// <summary> Направление транспорта </summary>
         public Directions Direction { protected set; get; }
 

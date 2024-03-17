@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
@@ -25,17 +26,10 @@ namespace Test135
         private const int Distance = 100;
 
         /// <summary> Конструктор </summary>
-        /// <param name="sizes">Количество мест на парковке</param>
-        /// <param name="pictureWidth">Рамзер парковки - ширина</param>
-        /// <param name="pictureHeight">Рамзер парковки - высота</param>
-        public Parking(Size NewPictureSize)
-        {
-            int CountX = NewPictureSize.Width / (_placeSizeWidth + Distance);
-            int CountY = NewPictureSize.Height / _placeSizeHeight;
+        /// <param name="NewPictureSize">Рамзер парковки</param>
+        public Parking(Size NewPictureSize) => Resize(NewPictureSize);
 
-            PictureSize = NewPictureSize; PlaceCount = new Point(CountX, CountY);
-        }
-
+        /// <summary> Обновление размера парковки </summary>
         public void Resize(Size NewPictureSize)
         {
             int CountX = NewPictureSize.Width / (_placeSizeWidth + Distance);
@@ -49,22 +43,29 @@ namespace Test135
         /// <param name="p">Парковка</param>
         public static int operator ^(Parking<T> p, int QR)
         {
-            Point Offset = new Point(0, 0);
-            for (int i = 0; i < p._places.Count; i++)
-                if (!p.CheckFreePlace(i))
-                {
-                    switch (p._places[i].GetTypeTransport())
+            try
+            {
+                Point Offset = new Point(0, 0);
+                for (int i = 0; i < p._places.Count; i++)
+                    if (!p.CheckFreePlace(i))
                     {
-                        case Transports.Car: Offset = new Point(60, 30); break;
-                        case Transports.SportCar: Offset = new Point(55, 25); break;
-                        default: Offset = new Point(0, 0); break;
-                    }
+                        switch (p._places[i].GetTypeTransport())
+                        {
+                            case Transports.Car: Offset = new Point(60, 30); break;
+                            case Transports.SportCar: Offset = new Point(55, 25); break;
+                            default: Offset = new Point(0, 0); break;
+                        }
 
-                    p._places[i].SetPosition
-                            (new Point(i / p.PlaceCount.Y * (_placeSizeWidth + Distance) + Offset.X, i % p.PlaceCount.Y * _placeSizeHeight + Offset.Y),
-                            new Size(p.PictureSize.Width, p.PictureSize.Height));
-                }
-            return QR;
+                        p._places[i].SetPosition
+                                (new Point(i / p.PlaceCount.Y * (_placeSizeWidth + Distance) + Offset.X, i % p.PlaceCount.Y * _placeSizeHeight + Offset.Y),
+                                new Size(p.PictureSize.Width, p.PictureSize.Height));
+                    }
+                return QR;
+            }
+            catch
+            {
+                throw new Exception();
+            }
         }
 
         /// <summary> Перегрузка оператора сложения <br/> 
@@ -73,14 +74,21 @@ namespace Test135
         /// <param name="car">Добавляемый автомобиль</param>
         public static int operator +(Parking<T> p, T Transport)
         {
-            if (p._places.Count == p.PlaceCount.X * p.PlaceCount.Y)
-            { new Loggers.Message.Errors.ParkingCrowded(); return -1; }
+            try
+            {
+                if (p._places.Count == p.PlaceCount.X * p.PlaceCount.Y)
+                    throw new Exceptions.Errors.ParkingCrowded();
 
-            for (int i = 0; i < p.PlaceCount.X * p.PlaceCount.Y; i++)
-                if (p.CheckFreePlace(i))
-                { p._places.Add(i, Transport); p.TransportParameters(p, i); return i; }
+                for (int i = 0; i < p.PlaceCount.X * p.PlaceCount.Y; i++)
+                    if (p.CheckFreePlace(i))
+                    { p._places.Add(i, Transport); p.TransportParameters(p, i); return i; }
 
-            return -1;
+                return -1;
+            }
+            catch
+            {
+                throw new Exception();
+            }
         }
 
         /// <summary> Назначение параметров согласно типу транспорта и его нахождению на парковке </summary>
@@ -107,16 +115,15 @@ namespace Test135
         /// <param name="index">Индекс места, с которого пытаемся извлечь объект</ param>
         public static T operator -(Parking<T> p, int Index)
         {
-            if (Index < 0 | Index > p._places.Count)
-            { new Loggers.Message.Errors.InvalidParkingSpaceNumber(Index); return null; }
+            if (Index < 0 | Index > p.PlaceCount.X * p.PlaceCount.Y)
+                throw new Exceptions.Errors.InvalidParkingSpaceNumber(Index);
             if (!p.CheckFreePlace(Index))
             {
                 T Transport = p._places[Index];
                 p._places.Remove(Index);
                 return Transport;
             }
-            else
-            { new Loggers.Message.Errors.ParkingCrowded(); return null; }
+            else throw new Exceptions.Errors.NoParkingPlaceFound(Index);
         }
 
         /// <summary> Метод проверки заполнености парковочного места (ячейки массива) </summary>
@@ -127,40 +134,54 @@ namespace Test135
         /// <summary> Метод отрисовки парковки </summary>
         public void Draw(Graphics g)
         {
-            DrawMarking(g);
-            if (_places != null)
+            try
             {
-                List<int> keys = _places.Keys.ToList();
-                for (int i = 0; i < keys.Count; i++)
-                    Textures.Drawing(g, _places[keys[i]]);
+                DrawMarking(g);
+                if (_places != null)
+                {
+                    List<int> keys = _places.Keys.ToList();
+                    for (int i = 0; i < keys.Count; i++)
+                        Textures.Drawing(g, _places[keys[i]]);
+                }
+            }
+            catch
+            {
+                throw new Exception();
             }
         }
 
         /// <summary> Метод отрисовки разметки парковочных мест  </summary>
         private void DrawMarking(Graphics g)
         {
-            Pen pen = new Pen(Color.Black, 4);
-            Pen PlanePen = new Pen(Color.Black, 2);
-
-            g.DrawRectangle(pen, 0, 0, PictureSize.Width, PictureSize.Height);
-
-            for (int i = 0; i < PlaceCount.X; i++)
+            try
             {
-                int StartPositionX = i * _placeSizeWidth + i * Distance;
+                Pen pen = new Pen(Color.Black, 4);
+                Pen PlanePen = new Pen(Color.Black, 2);
 
-                g.DrawLine
-                    (PlanePen, StartPositionX, 0, StartPositionX + _placeSizeWidth, 0);
+                g.DrawRectangle(pen, 0, 0, PictureSize.Width, PictureSize.Height);
 
-                for (int j = 0; j < PlaceCount.Y; ++j)
+                for (int i = 0; i < PlaceCount.X; i++)
                 {
-                    int StartPositionY = j * _placeSizeHeight;
+                    int StartPositionX = i * _placeSizeWidth + i * Distance;
 
                     g.DrawLine
-                    (PlanePen, StartPositionX, StartPositionY, StartPositionX, StartPositionY + _placeSizeHeight);
+                        (PlanePen, StartPositionX, 0, StartPositionX + _placeSizeWidth, 0);
 
-                    g.DrawLine
-                    (PlanePen, StartPositionX, _placeSizeHeight + StartPositionY, StartPositionX + _placeSizeWidth, _placeSizeHeight + StartPositionY);
+                    for (int j = 0; j < PlaceCount.Y; ++j)
+                    {
+                        int StartPositionY = j * _placeSizeHeight;
+
+                        g.DrawLine
+                        (PlanePen, StartPositionX, StartPositionY, StartPositionX, StartPositionY + _placeSizeHeight);
+
+                        g.DrawLine
+                        (PlanePen, StartPositionX, _placeSizeHeight + StartPositionY, StartPositionX + _placeSizeWidth, _placeSizeHeight + StartPositionY);
+                    }
                 }
+            }
+            catch
+            {
+                throw new Exception();
             }
         }
 
@@ -171,15 +192,14 @@ namespace Test135
             {
                 if (_places.ContainsKey(Index))
                     return _places[Index];
-                else
-                { new Loggers.Message.Errors.NoParkingPlaceFound(Index); return null; }
+                else throw new Exceptions.Errors.NoParkingPlaceFound(Index);
 
             }
             set
             {
                 if (CheckFreePlace(Index))
                 { _places.Add(Index, value); TransportParameters(this, Index); }
-                else new Loggers.Message.Errors.ParkingSpaceOccupied(Index);
+                else new Exceptions.Errors.ParkingSpaceOccupied(Index);
             }
         }
 

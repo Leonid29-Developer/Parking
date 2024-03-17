@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Text;
+using System.Windows.Forms;
 
 namespace Test135
 {
@@ -32,8 +33,7 @@ namespace Test135
             {
                 if (Index > -1 & Index < ParkingStages.Count)
                     return ParkingStages[Index];
-                else
-                { new Loggers.Message.Errors.UnacceptableParkingLevelNumber(Index); return null; }
+                else throw new Exceptions.Errors.UnacceptableParkingLevelNumber(Index);
             }
         }
 
@@ -75,11 +75,15 @@ namespace Test135
                     }
                 }
 
-                new Loggers.Message.Information.SaveData();
+                Exception ex = new Exceptions.Information.SaveData();
+                Form_Parking.LoG.Info($"{ex.Data["Say"]}. {ex.Message}");
+                MessageBox.Show(ex.Message, ex.Data["Say"].ToString(), MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch
             {
-                new Loggers.Message.Errors.SaveData();
+                Exception ex = new Exceptions.Errors.SaveData();
+                Form_Parking.LoG.Info($"{ex.Data["Kod"]}. {ex.Message}");
+                MessageBox.Show(ex.Message, ex.Data["Kod"].ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -112,7 +116,7 @@ namespace Test135
                 BufferTextFromFile = BufferTextFromFile.Replace("\r", "");
                 BufferTextFromFile = BufferTextFromFile.Replace(" ", "");
 
-                //MessageBox.Show(BufferTextFromFile);
+                //MessageBox.Show(BufferTextFromFile); // Вывод читаемого файла
 
                 var strs = BufferTextFromFile.Split('\n');
                 if (strs[0].Contains("CountLeveles"))

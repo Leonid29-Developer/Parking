@@ -1,6 +1,6 @@
 ﻿namespace Test135
 {
-    partial class FormParking
+    partial class Form_Parking
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormParking));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_Parking));
             this.pictureBoxParking = new System.Windows.Forms.PictureBox();
             this.pictureBoxTakeCar = new System.Windows.Forms.PictureBox();
             this.Button_UPTransport = new System.Windows.Forms.Button();
@@ -36,7 +36,6 @@
             this.ListLevels = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
             this.Create_Transport = new System.Windows.Forms.Button();
-            this.Button_ClearTransport = new System.Windows.Forms.Button();
             this.Button_Save = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -74,12 +73,12 @@
             // 
             this.Button_UPTransport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Button_UPTransport.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Button_UPTransport.Location = new System.Drawing.Point(988, 487);
+            this.Button_UPTransport.Location = new System.Drawing.Point(1082, 487);
             this.Button_UPTransport.Margin = new System.Windows.Forms.Padding(12);
             this.Button_UPTransport.Name = "Button_UPTransport";
-            this.Button_UPTransport.Size = new System.Drawing.Size(108, 54);
+            this.Button_UPTransport.Size = new System.Drawing.Size(122, 54);
             this.Button_UPTransport.TabIndex = 5;
-            this.Button_UPTransport.Text = "Забрать транспорт";
+            this.Button_UPTransport.Text = "Изъять транспорт";
             this.Button_UPTransport.UseVisualStyleBackColor = true;
             this.Button_UPTransport.Click += new System.EventHandler(this.Button_UPTransport_Click);
             // 
@@ -87,10 +86,10 @@
             // 
             this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox1.Location = new System.Drawing.Point(1006, 443);
+            this.textBox1.Location = new System.Drawing.Point(997, 501);
             this.textBox1.Margin = new System.Windows.Forms.Padding(12);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(75, 29);
+            this.textBox1.Size = new System.Drawing.Size(66, 29);
             this.textBox1.TabIndex = 6;
             this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -127,19 +126,6 @@
             this.Create_Transport.Text = "Создать транспорт";
             this.Create_Transport.UseVisualStyleBackColor = true;
             this.Create_Transport.Click += new System.EventHandler(this.Button_SetTransport_Click);
-            // 
-            // Button_ClearTransport
-            // 
-            this.Button_ClearTransport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button_ClearTransport.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Button_ClearTransport.Location = new System.Drawing.Point(1100, 487);
-            this.Button_ClearTransport.Margin = new System.Windows.Forms.Padding(12);
-            this.Button_ClearTransport.Name = "Button_ClearTransport";
-            this.Button_ClearTransport.Size = new System.Drawing.Size(108, 54);
-            this.Button_ClearTransport.TabIndex = 12;
-            this.Button_ClearTransport.Text = "Забыть транспорт";
-            this.Button_ClearTransport.UseVisualStyleBackColor = true;
-            this.Button_ClearTransport.Click += new System.EventHandler(this.Button_ClearTransport_Click);
             // 
             // Button_Save
             // 
@@ -198,7 +184,6 @@
             this.Controls.Add(this.Button_Load);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.Button_Save);
-            this.Controls.Add(this.Button_ClearTransport);
             this.Controls.Add(this.Create_Transport);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.ListLevels);
@@ -227,7 +212,6 @@
         private System.Windows.Forms.ListBox ListLevels;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button Create_Transport;
-        private System.Windows.Forms.Button Button_ClearTransport;
         private System.Windows.Forms.PictureBox Button_Save;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
