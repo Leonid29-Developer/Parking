@@ -13,7 +13,10 @@ namespace Test135
         private event TransportDelegate EventAddCar;
 
         public Form_TransportConfig()
-        { InitializeComponent(); Size = new Size(595, 310); }
+        {
+            InitializeComponent(); Size = new Size(595, 310);
+            Picture_Transport.Location = new Point(12, 48); Button_CreateFlag.Visible = false;
+        }
 
         /// <summary> Метод. Отрисовка транспорта</summary>
         private void Draw()
@@ -66,14 +69,16 @@ namespace Test135
                     case "Car":
                         {
                             Transport = new Car(Transports.Car, 100, 1000, Color.White);
-                            Size = new Size(595, 373);
+                            Size = new Size(595, 373); Picture_Transport.Location = new Point(12, 48);
+                            Button_CreateFlag.Visible = false;
                         }
                         break;
 
                     case "SportCar":
                         {
                             Transport = new SportCar(Transports.SportCar, 100, 1000, Color.Red, Color.Black, Rand.Next(1, 4), Color.White);
-                            Size = new Size(595, 522);
+                            Size = new Size(595, 522); Picture_Transport.Location = new Point(12, 48);
+                            Button_CreateFlag.Visible = false;
                         }
                         break;
 
@@ -87,7 +92,8 @@ namespace Test135
                             Grap_Flag.FillRectangle(new SolidBrush(Color.Gold), 10, 3, 3, 3);
 
                             Transport = new Cruiser(Transports.Cruiser, 100, 1000, Color.Red, BM_Flag);
-                            Size = new Size(595, 373);
+                            Size = new Size(595, 373); Picture_Transport.Location = new Point(12, 15);
+                            Button_CreateFlag.Visible = true;
                         }
                         break;
                 }
@@ -139,6 +145,15 @@ namespace Test135
                 MessageBox.Show(ex.Message, "Неизвестная ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void Button_CreateFlag_Click(object sender, EventArgs e)
+        {
+            Form_CreateFlag SetForm = new Form_CreateFlag();
+            SetForm.AddEvent(SetFlag); SetForm.Show();
+        }
+
+        private void SetFlag(Bitmap BM)
+        { Transport.FlagBM = BM; Draw(); }
 
         /// <summary> Добавление транспорта на парковку </summary>
         private void Button_Create_Click(object sender, EventArgs e)

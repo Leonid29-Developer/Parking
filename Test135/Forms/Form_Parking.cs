@@ -173,7 +173,7 @@ namespace Test135
             try
             {
                 if (parking.LoadData($@"{Application.StartupPath}"))
-                { Draw(); throw new Exceptions.Information.LoadData();  }
+                { Draw(); throw new Exceptions.Information.LoadData(); }
                 else throw new Exceptions.Errors.LoadData();
             }
             catch (Exceptions.Information.LoadData ex)

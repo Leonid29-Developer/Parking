@@ -44,6 +44,7 @@
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.Button_Create = new System.Windows.Forms.Button();
             this.Button_Сancel = new System.Windows.Forms.Button();
+            this.Button_CreateFlag = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.Picture_Transport)).BeginInit();
             this.panel1.SuspendLayout();
             this.MainColor.SuspendLayout();
@@ -58,7 +59,7 @@
             // 
             this.Picture_Transport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Picture_Transport.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.Picture_Transport.Location = new System.Drawing.Point(12, 48);
+            this.Picture_Transport.Location = new System.Drawing.Point(12, 15);
             this.Picture_Transport.Margin = new System.Windows.Forms.Padding(10);
             this.Picture_Transport.Name = "Picture_Transport";
             this.Picture_Transport.Size = new System.Drawing.Size(220, 120);
@@ -114,10 +115,11 @@
             this.panel1.AllowDrop = true;
             this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.Button_CreateFlag);
             this.panel1.Controls.Add(this.Picture_Transport);
-            this.panel1.Location = new System.Drawing.Point(304, 27);
+            this.panel1.Location = new System.Drawing.Point(301, 27);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(244, 222);
+            this.panel1.Size = new System.Drawing.Size(247, 222);
             this.panel1.TabIndex = 11;
             this.panel1.DragDrop += new System.Windows.Forms.DragEventHandler(this.panelCar_DragDrop);
             this.panel1.DragEnter += new System.Windows.Forms.DragEventHandler(this.panelCar_DragEnter);
@@ -243,6 +245,20 @@
             this.Button_Сancel.UseVisualStyleBackColor = true;
             this.Button_Сancel.Click += new System.EventHandler(this.Button_Сancel_Click);
             // 
+            // Button_CreateFlag
+            // 
+            this.Button_CreateFlag.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Button_CreateFlag.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Button_CreateFlag.Location = new System.Drawing.Point(12, 163);
+            this.Button_CreateFlag.Margin = new System.Windows.Forms.Padding(18);
+            this.Button_CreateFlag.Name = "Button_CreateFlag";
+            this.Button_CreateFlag.Size = new System.Drawing.Size(220, 39);
+            this.Button_CreateFlag.TabIndex = 21;
+            this.Button_CreateFlag.Tag = "Car";
+            this.Button_CreateFlag.Text = "Создать флаг";
+            this.Button_CreateFlag.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Button_CreateFlag.Click += new System.EventHandler(this.Button_CreateFlag_Click);
+            // 
             // Form_TransportConfig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -290,5 +306,6 @@
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Button Button_Create;
         private System.Windows.Forms.Button Button_Сancel;
+        private System.Windows.Forms.Label Button_CreateFlag;
     }
 }

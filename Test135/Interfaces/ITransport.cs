@@ -31,7 +31,7 @@ namespace Test135
         void SetColor(Color NewColor, TypesСolors TypeColor);
 
         /// <summary> Получение параметра Bitmap транспорта </summary>
-        Bitmap FlagBM { get; }
+        Bitmap FlagBM { get; set; }
 
         /// <summary> Метод отрисовки траспорта </summary>
         /// <param name="Grap_Transport">Элемент управления - Интерфейс</param>

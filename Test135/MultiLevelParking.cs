@@ -168,7 +168,7 @@ namespace Test135
                                     Bitmap BM_Flag = new Bitmap(15, 9);
                                     if (File.Exists(BitmapPath)) BM_Flag = (Bitmap)Image.FromFile(BitmapPath);
 
-                                    Transport = new Cruiser(Transports.Cruiser, Convert.ToInt32(strsParameters[1]), (float)Convert.ToDouble(strsParameters[2]), Color.Red, BM_Flag);
+                                    Transport = new Cruiser(Transports.Cruiser, Convert.ToInt32(strsParameters[1]), Convert.ToInt32(strsParameters[2]), Color.Red, BM_Flag);
                                 }
                                 break;
                         }
