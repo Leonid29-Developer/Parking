@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace Test135
 {
@@ -192,7 +193,7 @@ namespace Test135
             {
                 if (_places.ContainsKey(Index))
                     return _places[Index];
-                else throw new Exceptions.Errors.NoParkingPlaceFound(Index);
+                else return null;
 
             }
             set

@@ -84,10 +84,10 @@
     <Compile Include="Transports classes\SportCar.cs" />
     <Compile Include="Textures.cs" />
     <Compile Include="Transports classes\Vehicle.cs" />
-    <Compile Include="Директории\TypesСolors.cs" />
-    <Compile Include="Директории\Directions.cs" />
-    <Compile Include="Директории\ModeFlip.cs" />
-    <Compile Include="Директории\Transports.cs" />
+    <Compile Include="Directories classes\TypesСolors.cs" />
+    <Compile Include="Directories classes\Directions.cs" />
+    <Compile Include="Directories classes\ModeFlip.cs" />
+    <Compile Include="Directories classes\Transports.cs" />
     <EmbeddedResource Include="Form_Parking.resx">
       <DependentUpon>Form_Parking.cs</DependentUpon>
       <SubType>Designer</SubType>
